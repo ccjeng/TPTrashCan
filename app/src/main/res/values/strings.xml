@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">台北丟垃圾</string>
+
+    <string name="activity_setup">設定</string>
+    <string name="activity_about">關於</string>
+    <string name="activity_comments">建議與評價</string>
+
+    <string name="google_play_service_missing">裝置沒有安裝Google Play服務</string>
+    <string name="network_error">無法連線，請檢查手機是否正常連網</string>
+    <string name="location_error">目前無法定位座標，請檢查定位服務是否開啟</string>
+    <string name="data_not_found">附近沒有垃圾桶</string>
+
+    <string-array name="drawer_menu">
+        <item>設定</item>
+        <item>關於</item>
+        <item>建議與評價</item>
+    </string-array>
+
+        <string name="license">Copyright (c) 2015 ccjeng@google.com\n
+\n
+\n原始資料來源：
+        \n台北市政府資料開放平台：臺北市行人專用清潔箱 \n(資料更新日期:2015-09-02)
+        \nhttp://data.taipei/opendata/datalist/datasetMeta?oid=a835f3ba-7f50-4b0d-91a6-9df128632d1c
+\n
+\n函式庫版權
+        \nAndroid Iconics https://github.com/mikepenz/Android-Iconics/blob/develop/LICENSE
+        \nCrouton https://github.com/keyboardsurfer/Crouton/blob/master/LICENSE
+        \nMaterialDesignLibrary https://github.com/navasmdc/MaterialDesignLibrary/blob/master/LICENSE\n
+
+\n
+\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</string>
+    <string name="license_intro"></string>
+</resources>
