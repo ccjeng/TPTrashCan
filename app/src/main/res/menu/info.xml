@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".InfoActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <item
+            android:id="@+id/menu_navi"
+            android:orderInCategory="100"
+            app:showAsAction="always"
+            android:title="@string/menu_navi"/>
+
+</menu>

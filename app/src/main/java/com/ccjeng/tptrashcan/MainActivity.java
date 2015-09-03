@@ -31,6 +31,7 @@ import com.ccjeng.tptrashcan.ui.DrawerItem;
 import com.ccjeng.tptrashcan.ui.DrawerItemAdapter;
 import com.ccjeng.tptrashcan.ui.TrashCanItem;
 import com.ccjeng.tptrashcan.utils.Analytics;
+import com.ccjeng.tptrashcan.utils.Utils;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.common.ConnectionResult;
@@ -121,7 +122,6 @@ public class MainActivity extends ActionBarActivity
 
     // Stores the current instantiation of the location client in this object
     private GoogleApiClient locationClient;
-
 
 
     @Override
@@ -389,23 +389,11 @@ public class MainActivity extends ActionBarActivity
                     new ParseQueryAdapter.QueryFactory<TrashCanItem>() {
                         public ParseQuery<TrashCanItem> create() {
 
-
-
                             ParseQuery<TrashCanItem> query = TrashCanItem.getQuery();
-                            //query.whereContains("time", strHour + ":");
-                            //query.whereEqualTo("foodscraps_mon", "N");
-                            //query.whereEqualTo("garbage_mon", "N");
-                            //query.whereEqualTo("recycling_mon", "N");
-
-
-
-                            //if (sorting.equals("TIME")) {
-                            //    finalQuery.orderByAscending("time");
-                            //}
 
                             int distance = 100;
                             query.whereWithinKilometers("location"
-                                    , geoPointFromLocation(myLoc)
+                                    , Utils.geoPointFromLocation(myLoc)
                                     , distance
                             );
 
@@ -429,7 +417,7 @@ public class MainActivity extends ActionBarActivity
 
 
                     regionView.setText(trash.getRegion());
-                    distanceView.setText(trash.getDistance(geoPointFromLocation(myLoc)).toString());
+                    distanceView.setText(trash.getDistance(Utils.geoPointFromLocation(myLoc)).toString());
                     addressView.setText(trash.getFullAddress());
 
                     return view;
@@ -456,11 +444,8 @@ public class MainActivity extends ActionBarActivity
 
                         String msg = getString(R.string.data_not_found);
 
-                        //Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
                         Crouton.makeText(MainActivity.this, msg, Style.CONFIRM,
                                 (ViewGroup)findViewById(R.id.croutonview)).show();
-
-Log.d(TAG, "no data");
                     }
                 }
             });
@@ -472,7 +457,7 @@ Log.d(TAG, "no data");
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     final TrashCanItem item = trashcanQueryAdapter.getItem(position);
                     //Open Detail Page
-                    ///goIntent(item);
+                    goIntent(item);
                 }
             });
 
@@ -484,9 +469,6 @@ Log.d(TAG, "no data");
 
     }
 
-    private ParseGeoPoint geoPointFromLocation(Location loc) {
-        return new ParseGeoPoint(loc.getLatitude(), loc.getLongitude());
-    }
 
     /*
     * check network state
@@ -619,11 +601,34 @@ Log.d(TAG, "no data");
     public void onLocationChanged(Location location) {
         currentLocation = location;
         if (lastLocation != null
-                && geoPointFromLocation(location)
-                .distanceInKilometersTo(geoPointFromLocation(lastLocation)) < 0.01) {
+                && Utils.geoPointFromLocation(location)
+                .distanceInKilometersTo(Utils.geoPointFromLocation(lastLocation)) < 0.01) {
             // If the location hasn't changed by more than 10 meters, ignore it.
             return;
         }
         lastLocation = location;
     }
+
+    private void goIntent(TrashCanItem item) {
+
+        ga.trackEvent(this, "Location", "Region", item.getRegion(), 0);
+        ga.trackEvent(this, "Location", "Address", item.getFullAddress(), 0);
+
+        Intent intent = new Intent();
+        intent.setClass(this, InfoActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("fromLat", String.valueOf(myLoc.getLatitude()));
+        bundle.putString("fromLng", String.valueOf(myLoc.getLongitude()));
+        bundle.putString("toLat", String.valueOf(item.getLocation().getLatitude()));
+        bundle.putString("toLng", String.valueOf(item.getLocation().getLongitude()));
+
+        bundle.putString("address", item.getFullAddress());
+        bundle.putString("memo", item.getMemo());
+
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 0);
+
+    }
+
 }

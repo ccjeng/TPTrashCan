@@ -9,6 +9,7 @@
     <string name="network_error">無法連線，請檢查手機是否正常連網</string>
     <string name="location_error">目前無法定位座標，請檢查定位服務是否開啟</string>
     <string name="data_not_found">附近沒有垃圾桶</string>
+    <string name="menu_navi">帶我去丟垃圾</string>
 
     <string-array name="drawer_menu">
         <item>設定</item>
