@@ -60,9 +60,6 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.trashcanList)
-    ListView trashcanList;
-
     private String strFrom = "";
     private String strFromLat = "";
     private String strFromLng = "";
@@ -73,6 +70,7 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
 
     private String address;
     private String memo;
+    private String objectId;
     private Location myLoc;
     private ParseQueryAdapter<TrashCanItem> trashcanQueryAdapter;
 
@@ -94,7 +92,6 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         toolbar.setNavigationIcon(new IconicsDrawable(this)
                 .icon(GoogleMaterial.Icon.gmd_arrow_back)
                 .color(Color.WHITE)
@@ -106,26 +103,6 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
 
         Bundle bundle = this.getIntent().getExtras();
 
-        /*
-        ArrayList list = bundle.getParcelableArrayList("list");
-
-        ArrayItem item = (ArrayItem) list.get(0);
-
-        address = item.getAddress();
-        carno = item.getCarNo();
-        carnumber = item.getCarNumber();
-        time = item.getCarTime();
-        memo = item.getMemo();
-        garbage = item.checkTodayAvailableGarbage();
-        food = item.checkTodayAvailableFood();
-        recycling = item.checkTodayAvailableRecycling();
-
-
-        strTo = String.valueOf(item.getLocation().getLatitude()) + "," +
-                String.valueOf(item.getLocation().getLongitude());
-
-*/
-
         strFromLat = bundle.getString("fromLat");
         strFromLng = bundle.getString("fromLng");
         strFrom = strFromLat + "," + strFromLng;
@@ -136,36 +113,12 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
 
         address = bundle.getString("address");
         memo = bundle.getString("memo");
+        //objectId = bundle.getString("objectId");
 
-        //addressView.setText("位置：" + address);
+        addressView.setText("位置：" + address);
         memoView.setText(memo);
 
-
-        //reset title
-        /*
-        Geocoder geocoder = new Geocoder(this, new Locale("zh", "TW"));
-        String current_location = "現在位置:";
-        try {
-            List<Address> addressList = geocoder.getFromLocation(Double.valueOf(strFromLat)
-                    , Double.valueOf(strFromLng), 1);
-
-            if (addressList == null) {
-                current_location = getString(R.string.app_name);
-            } else {
-                current_location = current_location + addressList.get(0).getAdminArea() + "" + addressList.get(0).getLocality();
-            }
-
-        } catch (IOException e) {
-
-            Log.d(TAG, e.toString());
-
-            current_location = getString(R.string.app_name);
-        }
-*/
-        getSupportActionBar().setTitle(address);
-
-
-        parseQuery();
+        //getSupportActionBar().setTitle(address);
 
         // Set up the map fragment
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment)).getMap();
@@ -183,7 +136,7 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
         markerOpt.position(new LatLng(Double.valueOf(strFromLat)
                 , Double.valueOf(strFromLng)));
         markerOpt.title("現在位置");
-        markerOpt.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+        markerOpt.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         map.addMarker(markerOpt).showInfoWindow();
 
         //Marker
@@ -232,7 +185,6 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
 
         MenuItem menuItem1 = menu.findItem(R.id.menu_navi);
         menuItem1.setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_navigation).actionBarSize().color(Color.WHITE));
-
 
         return true;
     }
@@ -295,94 +247,6 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    private void parseQuery() {
-
-        myLoc = new Location("");;
-        myLoc.setLatitude(Double.valueOf(strToLat));
-        myLoc.setLongitude(Double.valueOf(strToLng));
-
-
-            if (TPTrashCan.APPDEBUG)
-                Log.d(TAG, "location = " + myLoc.toString());
-
-            // Set up a customized query
-            ParseQueryAdapter.QueryFactory<TrashCanItem> factory =
-                    new ParseQueryAdapter.QueryFactory<TrashCanItem>() {
-                        public ParseQuery<TrashCanItem> create() {
-
-
-
-                            ParseQuery<TrashCanItem> query = TrashCanItem.getQuery();
-
-                            int distance = 100;
-                            query.whereWithinKilometers("location"
-                                    , Utils.geoPointFromLocation(myLoc)
-                                    , distance
-                            );
-
-                            query.setLimit(5);
-
-                            return query;
-                        }
-                    };
-
-            // Set up the query adapter
-            trashcanQueryAdapter = new ParseQueryAdapter<TrashCanItem>(this, factory) {
-                @Override
-                public View getItemView(TrashCanItem trash, View view, ViewGroup parent) {
-                    if (view == null) {
-                        view = View.inflate(getContext(), R.layout.trashcan_item, null);
-                    }
-
-                    TextView regionView = (TextView) view.findViewById(R.id.region_view);
-                    TextView addressView = (TextView) view.findViewById(R.id.address_view);
-                    TextView distanceView = (TextView) view.findViewById(R.id.distance_view);
-
-
-                    regionView.setText(trash.getRegion());
-                    distanceView.setText(trash.getDistance(Utils.geoPointFromLocation(myLoc)).toString());
-                    addressView.setText(trash.getFullAddress());
-
-                    return view;
-                }
-            };
-
-            trashcanQueryAdapter.setPaginationEnabled(false);
-            trashcanQueryAdapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<TrashCanItem>() {
-
-                @Override
-                public void onLoading() {
-                    //pbLoading.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onLoaded(List<TrashCanItem> objects, Exception e) {
-
-                    //pbLoading.setVisibility(View.GONE);
-
-                    //No data
-                    if (trashcanList.getCount() == 0) {
-                        //String msg = String.valueOf(distance) + "公里"
-                        //         + getString(R.string.data_not_found);
-
-                    }
-                }
-            });
-
-            trashcanList.setAdapter(trashcanQueryAdapter);
-
-            // Set up the handler for an item's selection
-            trashcanList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final TrashCanItem item = trashcanQueryAdapter.getItem(position);
-                    //Open Detail Page
-                    //goIntent(item);
-                }
-            });
-
-
     }
 
 

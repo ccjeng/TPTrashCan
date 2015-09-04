@@ -8,8 +8,23 @@
     <color name="color_accent">@color/md_blue_500</color>
     <color name="color_primaryText">@android:color/white</color>
     <color name="color_drawer_background">@color/md_blue_300</color>
+    <color name="color_progress">@color/md_green_A700</color>
 
-    <!--reds
+    <color name="md_green_50">#C8E6C9</color>
+    <color name="md_green_100">#C8E6C9</color>
+    <color name="md_green_200">#A5D6A7</color>
+    <color name="md_green_300">#81C784</color>
+    <color name="md_green_400">#66BB6A</color>
+    <color name="md_green_500">#4CAF50</color>
+    <color name="md_green_600">#43A047</color>
+    <color name="md_green_700">#388E3C</color>
+    <color name="md_green_800">#2E7D32</color>
+    <color name="md_green_900">#1B5E20</color>
+    <color name="md_green_A100">#B9F6CA</color>
+    <color name="md_green_A200">#69F0AE</color>
+    <color name="md_green_A400">#00E676</color>
+    <color name="md_green_A700">#00C853</color>
+
     <color name="md_red_50">#FFEBEE</color>
     <color name="md_red_100">#FFCDD2</color>
     <color name="md_red_200">#EF9A9A</color>
@@ -23,7 +38,7 @@
     <color name="md_red_A100">#FF8A80</color>
     <color name="md_red_A200">#FF5252</color>
     <color name="md_red_A400">#FF1744</color>
-    <color name="md_red_A700">#D50000</color>-->
+    <color name="md_red_A700">#D50000</color>
 
     <!--blue-->
     <color name="md_blue_50">#E3F2FD</color>

@@ -3,15 +3,19 @@ package com.ccjeng.tptrashcan;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -32,6 +36,7 @@ import com.ccjeng.tptrashcan.ui.DrawerItemAdapter;
 import com.ccjeng.tptrashcan.ui.TrashCanItem;
 import com.ccjeng.tptrashcan.utils.Analytics;
 import com.ccjeng.tptrashcan.utils.Utils;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.common.ConnectionResult;
@@ -40,11 +45,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.List;
 
@@ -56,7 +64,8 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 public class MainActivity extends ActionBarActivity
         implements LocationListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener,
+        SwipeRefreshLayout.OnRefreshListener{
 
     private static final String TAG = TPTrashCan.class.getSimpleName();
     private ActionBarDrawerToggle mDrawerToggle;
@@ -77,10 +86,19 @@ public class MainActivity extends ActionBarActivity
     @Bind(R.id.trashcanList)
     ListView trashcanList;
 
+    @Bind(R.id.progress_wheel)
+    ProgressWheel progressWheel;
+
+    @Bind(R.id.pull_to_refresh)
+    SwipeRefreshLayout mSwipeLayout;
+    public static final int REFRESH_DELAY = 1000;
+
     // 記錄被選擇的選單指標用
     private int mCurrentMenuItemPosition = -1;
 
     private AdView adView;
+    private int distance;
+    private int rowcount;
 
     /*
   * Define a request code to send to Google Play services This code is returned in
@@ -137,6 +155,9 @@ public class MainActivity extends ActionBarActivity
         initDrawer();
         initDrawerList();
 
+        getPref();
+        adView();
+
         if (isNetworkConnected()) {
             // 建立Google API用戶端物件
             configGoogleApiClient();
@@ -152,6 +173,13 @@ public class MainActivity extends ActionBarActivity
             Crouton.makeText(MainActivity.this, R.string.network_error, Style.ALERT,
                     (ViewGroup)findViewById(R.id.croutonview)).show();
         }
+
+
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
 
     }
 
@@ -240,11 +268,21 @@ public class MainActivity extends ActionBarActivity
                 startActivity(new Intent(this, Prefs.class));
                 break;
             case 1:
-                startActivity(new Intent(this, AboutActivity.class));
+                //startActivity(new Intent(this, AboutActivity.class));
+                new LibsBuilder()
+                        //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
+                        .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                        .withAboutIconShown(true)
+                        .withAboutVersionShown(true)
+                        .withAboutAppName(getString(R.string.app_name))
+                        .withActivityTitle(getString(R.string.activity_about))
+                        .withAboutDescription(getString(R.string.license))
+                                //start the activity
+                        .start(this);
                 break;
             case 2:
                 startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=com.oddsoft.tpetrash2")));
+                        Uri.parse("market://details?id=com.ccjeng.tptrashcan")));
                 break;
         }
 
@@ -320,6 +358,8 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onPause() {
         super.onPause();
+
+        getPref();
         if (adView != null)
             adView.pause();
 
@@ -359,6 +399,21 @@ public class MainActivity extends ActionBarActivity
         super.onDestroy();
     }
 
+    /*
+        SwipeRefreshLayout
+     */
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                parseQuery();
+                mSwipeLayout.setRefreshing(false);
+            }
+        }, REFRESH_DELAY);
+
+    }
+
     private void parseQuery() {
 
         myLoc = (currentLocation == null) ? lastLocation : currentLocation;
@@ -391,13 +446,12 @@ public class MainActivity extends ActionBarActivity
 
                             ParseQuery<TrashCanItem> query = TrashCanItem.getQuery();
 
-                            int distance = 100;
                             query.whereWithinKilometers("location"
                                     , Utils.geoPointFromLocation(myLoc)
                                     , distance
                             );
 
-                            query.setLimit(100);
+                            query.setLimit(rowcount);
 
                             return query;
                         }
@@ -415,7 +469,6 @@ public class MainActivity extends ActionBarActivity
                     TextView addressView = (TextView) view.findViewById(R.id.address_view);
                     TextView distanceView = (TextView) view.findViewById(R.id.distance_view);
 
-
                     regionView.setText(trash.getRegion());
                     distanceView.setText(trash.getDistance(Utils.geoPointFromLocation(myLoc)).toString());
                     addressView.setText(trash.getFullAddress());
@@ -429,20 +482,20 @@ public class MainActivity extends ActionBarActivity
 
                 @Override
                 public void onLoading() {
-                    //pbLoading.setVisibility(View.VISIBLE);
+                    progressWheel.setVisibility(View.VISIBLE);
                 }
 
                 @Override
                 public void onLoaded(List<TrashCanItem> objects, Exception e) {
 
-                    //pbLoading.setVisibility(View.GONE);
+                    progressWheel.setVisibility(View.GONE);
 
                     //No data
                     if (trashcanList.getCount() == 0) {
-                        //String msg = String.valueOf(distance) + "公里"
-                        //         + getString(R.string.data_not_found);
+                        String msg = String.valueOf(distance) + "公里"
+                                + getString(R.string.data_not_found);
 
-                        String msg = getString(R.string.data_not_found);
+                        //String msg = getString(R.string.data_not_found);
 
                         Crouton.makeText(MainActivity.this, msg, Style.CONFIRM,
                                 (ViewGroup)findViewById(R.id.croutonview)).show();
@@ -625,10 +678,34 @@ public class MainActivity extends ActionBarActivity
 
         bundle.putString("address", item.getFullAddress());
         bundle.putString("memo", item.getMemo());
+        //bundle.putString("objectId", item.getObjectId());
 
         intent.putExtras(bundle);
         startActivityForResult(intent, 0);
 
     }
 
+    private void getPref() {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+        distance = Integer.valueOf(prefs.getString("distance", "1")) + 1;
+        rowcount = Integer.valueOf(prefs.getString("rowcount", "20"));
+    }
+
+    private void adView() {
+        adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest;
+
+        if (TPTrashCan.APPDEBUG) {
+            //Test Mode
+            adRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addTestDevice(TPTrashCan.ADMOB_TEST_DEVICE_ID)
+                    .build();
+        } else {
+            adRequest = new AdRequest.Builder().build();
+
+        }
+        adView.loadAd(adRequest);
+    }
 }

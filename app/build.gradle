@@ -26,10 +26,14 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.8.0'
     compile 'com.parse.bolts:bolts-android:1.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.pnikosis:materialish-progress:1.5'
     compile 'com.mikepenz:iconics-core:1.7.5@aar'
     compile 'com.mikepenz:google-material-typeface:1.2.0.1@aar'
     compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
         // exclusion is not necessary, but generally a good idea.
         exclude group: 'com.google.android', module: 'support-v4'
+    }
+    compile('com.mikepenz:aboutlibraries:5.2.1@aar') {
+        transitive = true
     }
 }

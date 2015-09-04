@@ -18,21 +18,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_below="@+id/toolbar"
-        android:visibility="gone"/>
+        android:layout_below="@+id/toolbar" />
 
     <TextView
         android:id="@+id/memo"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_below="@+id/address"/>
-
-    <ListView
-        android:id="@+id/trashcanList"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/memo"/>
+        android:layout_below="@+id/address"
+        android:textColor="@color/md_red_A400"/>
 
     <fragment
         android:id="@+id/map_fragment"
@@ -40,8 +34,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_below="@+id/trashcanList"/>
-
+        android:layout_below="@+id/memo"/>
 
 
 </RelativeLayout>

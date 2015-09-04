@@ -17,25 +17,22 @@
         <item>建議與評價</item>
     </string-array>
 
-        <string name="license">Copyright (c) 2015 ccjeng@google.com\n
-\n
-\n原始資料來源：
-        \n台北市政府資料開放平台：臺北市行人專用清潔箱 \n(資料更新日期:2015-09-02)
-        \nhttp://data.taipei/opendata/datalist/datasetMeta?oid=a835f3ba-7f50-4b0d-91a6-9df128632d1c
-\n
-\n函式庫版權
-        \nAndroid Iconics https://github.com/mikepenz/Android-Iconics/blob/develop/LICENSE
-        \nCrouton https://github.com/keyboardsurfer/Crouton/blob/master/LICENSE
-        \nMaterialDesignLibrary https://github.com/navasmdc/MaterialDesignLibrary/blob/master/LICENSE\n
+    <string name="pref_distance">查詢範圍</string>
+    <string name="pref_distance_summary">查詢距離(公里)</string>
+    <string name="pref_rowcount">查詢筆數</string>
+    <string name="pref_rowcount_summary">顯示的查詢筆數</string>
 
-\n
-\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-</string>
+    <string name="license"><Data><![CDATA[Copyright (c) 2015 ccjeng@google.com<br/>原始資料來源:
+    <br/>台北市政府資料開放平台 <a href=http://data.taipei/opendata/datalist/datasetMeta?oid=a835f3ba-7f50-4b0d-91a6-9df128632d1c>臺北市行人專用清潔箱</a>
+    ]]></Data></string>
+
+    <!--<string name="license"><Data>
+        <![CDATA[Copyright 2015 ccjeng@google.com
+        <br/>原始資料來源：
+        <br/><a href='http://data.taipei/opendata/datalist/datasetMeta?oid=a835f3ba-7f50-4b0d-91a6-9df128632d1c'>
+        台北市政府資料開放平台：臺北市行人專用清潔箱</a><br/>
+        ]]>
+    </Data></string>-->
+
     <string name="license_intro"></string>
 </resources>

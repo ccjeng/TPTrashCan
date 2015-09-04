@@ -14,6 +14,10 @@ import java.text.DecimalFormat;
 @ParseClassName("TPE201509")
 public class TrashCanItem extends ParseObject {
 
+    public String getId() {
+        return getString("objectId");
+    }
+
     public String getAddress() {
         return  getString("address");
     }

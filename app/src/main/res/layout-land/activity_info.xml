@@ -37,16 +37,8 @@
         class="com.google.android.gms.maps.MapFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="16dp"
         android:layout_below="@+id/memo"
         />
 
-    <ListView
-        android:id="@+id/trashcanList"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/map_fragment"
-        android:visibility="gone"
-        />
 
 </RelativeLayout>

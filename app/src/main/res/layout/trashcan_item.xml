@@ -14,13 +14,13 @@
                 android:id="@+id/region_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
             <TextView
                 android:id="@+id/distance_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:textSize="18sp"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
         </TableRow>
     </TableLayout>
     <TableLayout
@@ -31,7 +31,7 @@
                 android:id="@+id/address_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
         </TableRow>
     </TableLayout>
 

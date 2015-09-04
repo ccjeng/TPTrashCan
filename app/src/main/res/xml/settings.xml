@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory android:title="@string/activity_about">
-        <!--
-	 	<ListPreference
+	<PreferenceCategory android:title="@string/activity_setup">
+	 	<EditTextPreference
             android:title="@string/pref_distance"
             android:summary="@string/pref_distance_summary"
             android:key="distance"
-            android:defaultValue="3"
-            android:entries="@array/pref_distance_item"
-            android:entryValues="@array/pref_distance_code" />-->
+            android:defaultValue="1"
+            android:inputType="number"/>
+        <EditTextPreference
+            android:title="@string/pref_rowcount"
+            android:summary="@string/pref_rowcount_summary"
+            android:key="rowcount"
+            android:defaultValue="20"
+            android:inputType="number"/>
     </PreferenceCategory>
 </PreferenceScreen>
