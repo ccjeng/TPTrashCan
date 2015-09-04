@@ -34,7 +34,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_below="@+id/memo"/>
+        android:layout_below="@+id/memo"
+        />
 
 
 </RelativeLayout>

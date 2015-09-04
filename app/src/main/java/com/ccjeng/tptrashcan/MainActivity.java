@@ -160,7 +160,7 @@ public class MainActivity extends ActionBarActivity
         initDrawerList();
 
         getPref();
-        adView();
+        //adView();
 
 
         if (Version.isNewInstallation(this)) {
@@ -180,6 +180,8 @@ public class MainActivity extends ActionBarActivity
             if (!locationClient.isConnected()) {
                 locationClient.connect();
             }
+            //parseQuery();
+
         } else {
 
             Crouton.makeText(MainActivity.this, R.string.network_error, Style.ALERT,
@@ -430,6 +432,7 @@ public class MainActivity extends ActionBarActivity
 
         myLoc = (currentLocation == null) ? lastLocation : currentLocation;
 
+        Log.d(TAG, "parseQuery");
         //fake location
         if (TPTrashCan.APPDEBUG) {
             myLoc = new Location("");
@@ -446,7 +449,7 @@ public class MainActivity extends ActionBarActivity
         if (myLoc != null) {
 
             //set current location to global veriable
-            TPTrashCan.setCurrentLocation(myLoc);
+            //TPTrashCan.setCurrentLocation(myLoc);
 
             if (TPTrashCan.APPDEBUG)
                 Log.d(TAG, "location = " + myLoc.toString());
@@ -511,6 +514,8 @@ public class MainActivity extends ActionBarActivity
 
                         Crouton.makeText(MainActivity.this, msg, Style.CONFIRM,
                                 (ViewGroup)findViewById(R.id.croutonview)).show();
+
+                        Log.d(TAG, "no data");
                     }
                 }
             });

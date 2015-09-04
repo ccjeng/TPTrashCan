@@ -2,31 +2,25 @@ package com.ccjeng.tptrashcan;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ccjeng.tptrashcan.app.TPTrashCan;
-import com.ccjeng.tptrashcan.ui.TrashCanItem;
 import com.ccjeng.tptrashcan.utils.Analytics;
-import com.ccjeng.tptrashcan.utils.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -34,20 +28,12 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 
-public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
+public class InfoActivity extends ActionBarActivity {
 
     private static final String TAG = TPTrashCan.class.getSimpleName();
 
@@ -72,7 +58,7 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
     private String memo;
     private String objectId;
     private Location myLoc;
-    private ParseQueryAdapter<TrashCanItem> trashcanQueryAdapter;
+    //private ParseQueryAdapter<TrashCanItem> trashcanQueryAdapter;
 
     // Map fragment
     private GoogleMap map;
@@ -127,7 +113,7 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
 
         CameraUpdate center =
                 CameraUpdateFactory.newLatLngZoom(new LatLng(Double.valueOf(strToLat)
-                        , Double.valueOf(strToLng)), 15);
+                        , Double.valueOf(strToLng)), 17);
         map.animateCamera(center);
 
 
@@ -248,6 +234,5 @@ public class InfoActivity extends ActionBarActivity /*FragmentActivity*/ {
     protected void onDestroy() {
         super.onDestroy();
     }
-
 
 }

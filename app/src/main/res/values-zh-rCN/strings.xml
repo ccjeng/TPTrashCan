@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">台北丟垃圾</string>
+
+    <string name="activity_setup">设定</string>
+    <string name="activity_about">关于</string>
+    <string name="activity_comments">建议与评价</string>
+
+    <string name="google_play_service_missing">装置没有安装Google Play服务</string>
+    <string name="network_error">无法连线，请检查手机是否正常连网</string>
+    <string name="location_error">目前无法定位座标，请检查定位服务是否开启</string>
+    <string name="data_not_found">附近没有垃圾桶</string>
+    <string name="menu_navi">带我去丢垃圾</string>
+
+    <string-array name="drawer_menu">
+        <item>设定</item>
+        <item>关于</item>
+        <item>建议与评价</item>
+    </string-array>
+
+    <string name="pref_distance">查询范围</string>
+    <string name="pref_distance_summary">查询距离(公里)</string>
+    <string name="pref_rowcount">查询笔数</string>
+    <string name="pref_rowcount_summary">显示的查询笔数</string>
+
+    <string name="license"><Data><![CDATA[Copyright (c) 2015 ccjeng@google.com<br/>原始资料来源:
+    <br/>台北市政府资料开放平台 <a href=http://data.taipei/opendata/datalist/datasetMeta?oid=a835f3ba-7f50-4b0d-91a6-9df128632d1c>台北市行人专用清洁箱</a>
+    ]]></Data></string>
+
+    <string name="changelog_title">更新记录</string>
+    <string name="welcome_title">欢迎使用台北丢垃圾</string>
+    <string name="welcome_message">
+        资料来源:台北市政府开放资料\n\n
+        预设显示最近一公里内的垃圾桶资料15笔(可自订)\n
+        严禁投入家用垃圾，违者重罚新台币6000元!
+    </string>
+</resources>
