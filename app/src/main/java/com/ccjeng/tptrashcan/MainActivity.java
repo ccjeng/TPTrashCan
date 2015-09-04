@@ -1,5 +1,6 @@
 package com.ccjeng.tptrashcan;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +37,7 @@ import com.ccjeng.tptrashcan.ui.DrawerItemAdapter;
 import com.ccjeng.tptrashcan.ui.TrashCanItem;
 import com.ccjeng.tptrashcan.utils.Analytics;
 import com.ccjeng.tptrashcan.utils.Utils;
+import com.ccjeng.tptrashcan.utils.Version;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -99,6 +101,8 @@ public class MainActivity extends ActionBarActivity
     private AdView adView;
     private int distance;
     private int rowcount;
+    private static final int DIALOG_WELCOME = 1;
+    private static final int DIALOG_UPDATE = 2;
 
     /*
   * Define a request code to send to Google Play services This code is returned in
@@ -157,6 +161,14 @@ public class MainActivity extends ActionBarActivity
 
         getPref();
         adView();
+
+
+        if (Version.isNewInstallation(this)) {
+            this.showDialog(DIALOG_WELCOME);
+        } else
+        if (Version.newVersionInstalled(this)) {
+            this.showDialog(DIALOG_UPDATE);
+        }
 
         if (isNetworkConnected()) {
             // 建立Google API用戶端物件
@@ -708,4 +720,39 @@ public class MainActivity extends ActionBarActivity
         }
         adView.loadAd(adRequest);
     }
+
+
+    protected final Dialog onCreateDialog(final int id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //builder.setIcon(android.R.drawable.ic_dialog_info);
+
+        builder.setIcon(new IconicsDrawable(this)
+                .icon(GoogleMaterial.Icon.gmd_info)
+                .color(Color.GRAY)
+                .sizeDp(24));
+
+        builder.setCancelable(true);
+        builder.setPositiveButton(android.R.string.ok, null);
+
+        final Context context = this;
+
+        switch (id) {
+            case DIALOG_WELCOME:
+                builder.setTitle(getResources().getString(R.string.welcome_title));
+                builder.setMessage(getResources().getString(R.string.welcome_message));
+                break;
+            case DIALOG_UPDATE:
+                builder.setTitle(getString(R.string.changelog_title));
+                final String[] changes = getResources().getStringArray(R.array.updates);
+                final StringBuilder buf = new StringBuilder();
+                for (int i = 0; i < changes.length; i++) {
+                    buf.append("\n\n");
+                    buf.append(changes[i]);
+                }
+                builder.setMessage(buf.toString().trim());
+                break;
+        }
+        return builder.create();
+    }
+
 }

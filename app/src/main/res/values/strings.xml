@@ -26,13 +26,11 @@
     <br/>台北市政府資料開放平台 <a href=http://data.taipei/opendata/datalist/datasetMeta?oid=a835f3ba-7f50-4b0d-91a6-9df128632d1c>臺北市行人專用清潔箱</a>
     ]]></Data></string>
 
-    <!--<string name="license"><Data>
-        <![CDATA[Copyright 2015 ccjeng@google.com
-        <br/>原始資料來源：
-        <br/><a href='http://data.taipei/opendata/datalist/datasetMeta?oid=a835f3ba-7f50-4b0d-91a6-9df128632d1c'>
-        台北市政府資料開放平台：臺北市行人專用清潔箱</a><br/>
-        ]]>
-    </Data></string>-->
-
-    <string name="license_intro"></string>
+    <string name="changelog_title">更新記錄</string>
+    <string name="welcome_title">歡迎使用台北丟垃圾</string>
+    <string name="welcome_message">
+        資料來源:台北市政府開放資料\n\n
+        預設顯示最近一公里內的垃圾桶資料15筆(可自訂)\n
+        嚴禁投入家用垃圾，違者重罰新台幣6000元!
+    </string>
 </resources>

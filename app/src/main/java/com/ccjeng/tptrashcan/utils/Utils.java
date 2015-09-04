@@ -1,7 +1,5 @@
 package com.ccjeng.tptrashcan.utils;
 
-import android.location.Location;
-
 import com.parse.ParseGeoPoint;
 
 /**
@@ -9,7 +7,7 @@ import com.parse.ParseGeoPoint;
  */
 public class Utils {
 
-    public static ParseGeoPoint geoPointFromLocation(Location loc) {
+    public static ParseGeoPoint geoPointFromLocation(android.location.Location loc) {
         return new ParseGeoPoint(loc.getLatitude(), loc.getLongitude());
     }
 
