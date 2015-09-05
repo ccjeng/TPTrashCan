@@ -18,7 +18,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/memo"
@@ -26,14 +27,14 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_below="@+id/address"
-        android:textColor="@color/md_red_A400"/>
+        android:textColor="@color/md_red_A400"
+        android:visibility="gone"/>
 
     <fragment
         android:id="@+id/map_fragment"
         class="com.google.android.gms.maps.MapFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_below="@+id/memo"
         />
 

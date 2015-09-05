@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.ccjeng.tptrashcan.app.TPTrashCan;
 import com.ccjeng.tptrashcan.utils.Analytics;
+import com.ccjeng.tptrashcan.utils.MapUtils;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -58,7 +59,6 @@ public class InfoActivity extends ActionBarActivity {
     private String memo;
     private String objectId;
     private Location myLoc;
-    //private ParseQueryAdapter<TrashCanItem> trashcanQueryAdapter;
 
     // Map fragment
     private GoogleMap map;
@@ -73,9 +73,7 @@ public class InfoActivity extends ActionBarActivity {
         ga = new Analytics();
         ga.trackerPage(this);
 
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationIcon(new IconicsDrawable(this)
@@ -135,15 +133,16 @@ public class InfoActivity extends ActionBarActivity {
 
         //Draw Line
         PolylineOptions polylineOpt = new PolylineOptions();
-        polylineOpt.add(new LatLng(Double.valueOf(strFromLat)
-                , Double.valueOf(strFromLng)));
-        polylineOpt.add(new LatLng(Double.valueOf(strToLat)
-                , Double.valueOf(strToLng)));
 
-        polylineOpt.color(Color.BLUE);
+        LatLng from = new LatLng(Double.valueOf(strFromLat), Double.valueOf(strFromLng));
+        LatLng to = new LatLng(Double.valueOf(strToLat), Double.valueOf(strToLng));
 
-        Polyline polyline = map.addPolyline(polylineOpt);
-        polyline.setWidth(10);
+        polylineOpt.add(from, to).color(Color.BLUE).width(5);
+
+        map.addPolyline(polylineOpt);
+
+        MapUtils.DrawArrowHead(map, from, to);
+
     }
 
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
@@ -157,7 +156,6 @@ public class InfoActivity extends ActionBarActivity {
                 case R.id.menu_navi:
                     goBrowser();
                     break;
-
             }
 
             return true;
@@ -177,9 +175,6 @@ public class InfoActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
 
         if (item.getItemId() == android.R.id.home) {
             finish();

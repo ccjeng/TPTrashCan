@@ -160,7 +160,7 @@ public class MainActivity extends ActionBarActivity
         initDrawerList();
 
         getPref();
-        //adView();
+        adView();
 
 
         if (Version.isNewInstallation(this)) {
@@ -329,9 +329,6 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
@@ -393,7 +390,7 @@ public class MainActivity extends ActionBarActivity
     protected void onResume() {
         super.onResume();
 
-        //getPref();
+        getPref();
         if (adView != null)
             adView.resume();
 
@@ -432,17 +429,18 @@ public class MainActivity extends ActionBarActivity
 
         myLoc = (currentLocation == null) ? lastLocation : currentLocation;
 
-        Log.d(TAG, "parseQuery");
         //fake location
         if (TPTrashCan.APPDEBUG) {
             myLoc = new Location("");
-            //myLoc.setLatitude(24.8979347);
-            //myLoc.setLongitude(121.5393508);
-            //myLoc.setLatitude(25.0249034);
-            //myLoc.setLongitude(121.560214);
+            myLoc.setLatitude(24.8979347);
+            myLoc.setLongitude(121.5393508);
+
+            //101
+            //myLoc.setLatitude(25.0339031);
+            //myLoc.setLongitude(121.5645098);
             //Taipei City
-            myLoc.setLatitude(25.0950492);
-            myLoc.setLongitude(121.5246077);
+            //myLoc.setLatitude(25.0950492);
+            //myLoc.setLongitude(121.5246077);
 
         }
 
@@ -463,7 +461,7 @@ public class MainActivity extends ActionBarActivity
 
                             query.whereWithinKilometers("location"
                                     , Utils.geoPointFromLocation(myLoc)
-                                    , distance
+                                    , distance + 1
                             );
 
                             query.setLimit(rowcount);
@@ -510,12 +508,8 @@ public class MainActivity extends ActionBarActivity
                         String msg = String.valueOf(distance) + "公里"
                                 + getString(R.string.data_not_found);
 
-                        //String msg = getString(R.string.data_not_found);
-
                         Crouton.makeText(MainActivity.this, msg, Style.CONFIRM,
                                 (ViewGroup)findViewById(R.id.croutonview)).show();
-
-                        Log.d(TAG, "no data");
                     }
                 }
             });
@@ -705,7 +699,7 @@ public class MainActivity extends ActionBarActivity
     private void getPref() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
-        distance = Integer.valueOf(prefs.getString("distance", "1")) + 1;
+        distance = Integer.valueOf(prefs.getString("distance", "1"));
         rowcount = Integer.valueOf(prefs.getString("rowcount", "20"));
     }
 

@@ -30,7 +30,7 @@
     <string name="welcome_title">欢迎使用台北丢垃圾</string>
     <string name="welcome_message">
         资料来源:台北市政府开放资料\n\n
-        预设显示最近一公里内的垃圾桶资料15笔(可自订)\n
+        预设显示附近一公里内的垃圾桶资料20笔(可自订)\n
         严禁投入家用垃圾，违者重罚新台币6000元!
     </string>
 </resources>
