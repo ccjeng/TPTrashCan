@@ -240,7 +240,7 @@ public class MainActivity extends ActionBarActivity
 
         String[] drawer_menu = this.getResources().getStringArray(R.array.drawer_menu);
 
-        DrawerItem[] drawerItem = new DrawerItem[3];
+        DrawerItem[] drawerItem = new DrawerItem[4];
 
         drawerItem[0] = new DrawerItem(new IconicsDrawable(this)
                 .icon(GoogleMaterial.Icon.gmd_settings)
@@ -257,6 +257,11 @@ public class MainActivity extends ActionBarActivity
                 .color(Color.GRAY)
                 .sizeDp(24),
                 drawer_menu[2]);
+        drawerItem[3] = new DrawerItem(new IconicsDrawable(this)
+                .icon(GoogleMaterial.Icon.gmd_my_location)
+                .color(Color.GRAY)
+                .sizeDp(24),
+                drawer_menu[3]);
 
 
         DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_item, drawerItem);
@@ -282,7 +287,6 @@ public class MainActivity extends ActionBarActivity
                 startActivity(new Intent(this, Prefs.class));
                 break;
             case 1:
-                //startActivity(new Intent(this, AboutActivity.class));
                 new LibsBuilder()
                         //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
                         .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
@@ -297,6 +301,10 @@ public class MainActivity extends ActionBarActivity
             case 2:
                 startActivity(new Intent(Intent.ACTION_VIEW,
                         Uri.parse("market://details?id=com.ccjeng.tptrashcan")));
+                break;
+            case 3:
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://bin.ccjeng.com")));
                 break;
         }
 
@@ -432,15 +440,15 @@ public class MainActivity extends ActionBarActivity
         //fake location
         if (TPTrashCan.APPDEBUG) {
             myLoc = new Location("");
-            myLoc.setLatitude(24.8979347);
-            myLoc.setLongitude(121.5393508);
+            //myLoc.setLatitude(24.8979347);
+            //myLoc.setLongitude(121.5393508);
 
             //101
             //myLoc.setLatitude(25.0339031);
             //myLoc.setLongitude(121.5645098);
             //Taipei City
-            //myLoc.setLatitude(25.0950492);
-            //myLoc.setLongitude(121.5246077);
+            myLoc.setLatitude(25.0950492);
+            myLoc.setLongitude(121.5246077);
 
         }
 

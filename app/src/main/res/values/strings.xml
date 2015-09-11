@@ -15,6 +15,7 @@
         <item>設定</item>
         <item>關於</item>
         <item>建議與評價</item>
+        <item>網頁版</item>
     </string-array>
 
     <string name="pref_distance">查詢範圍</string>
@@ -22,7 +23,7 @@
     <string name="pref_rowcount">查詢筆數</string>
     <string name="pref_rowcount_summary">顯示的查詢筆數</string>
 
-    <string name="license"><Data><![CDATA[Copyright (c) 2015 ccjeng@google.com<br/>原始資料來源:
+    <string name="license"><Data><![CDATA[Copyright (c) 2015 ccjeng@google.com<br/><br/>原始資料來源:
     <br/>台北市政府資料開放平台 <a href=http://data.taipei/opendata/datalist/datasetMeta?oid=a835f3ba-7f50-4b0d-91a6-9df128632d1c>臺北市行人專用清潔箱</a>
     ]]></Data></string>
 

@@ -120,15 +120,21 @@ public class InfoActivity extends ActionBarActivity {
         markerOpt.position(new LatLng(Double.valueOf(strFromLat)
                 , Double.valueOf(strFromLng)));
         markerOpt.title("現在位置");
-        markerOpt.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        markerOpt.icon(BitmapDescriptorFactory.fromResource(R.drawable.position));
         map.addMarker(markerOpt).showInfoWindow();
+
+        //map.getUiSettings().setAllGesturesEnabled(false);
+        //map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.setMyLocationEnabled(true);
+
 
         //Marker
         MarkerOptions markerOpt2 = new MarkerOptions();
         markerOpt2.position(new LatLng(Double.valueOf(strToLat)
                 , Double.valueOf(strToLng)));
         markerOpt2.title(address);
-        markerOpt2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        markerOpt2.icon(BitmapDescriptorFactory.fromResource(R.drawable.pin));
+
         map.addMarker(markerOpt2).showInfoWindow();
 
         //Draw Line
@@ -141,7 +147,7 @@ public class InfoActivity extends ActionBarActivity {
 
         map.addPolyline(polylineOpt);
 
-        MapUtils.DrawArrowHead(map, from, to);
+        //MapUtils.DrawArrowHead(map, from, to);
 
     }
 

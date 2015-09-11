@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <string-array name="updates">
-    	<item>1.0.0\n第一版上架
+    	<item>1.0.1\n改善介面\n增加網頁版連結
     	</item>
 </string-array>
 </resources>
