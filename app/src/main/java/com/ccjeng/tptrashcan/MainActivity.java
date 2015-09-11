@@ -438,7 +438,7 @@ public class MainActivity extends ActionBarActivity
         myLoc = (currentLocation == null) ? lastLocation : currentLocation;
 
         //fake location
-        if (TPTrashCan.APPDEBUG) {
+       /* if (TPTrashCan.APPDEBUG) {
             myLoc = new Location("");
             //myLoc.setLatitude(24.8979347);
             //myLoc.setLongitude(121.5393508);
@@ -450,7 +450,7 @@ public class MainActivity extends ActionBarActivity
             myLoc.setLatitude(25.0950492);
             myLoc.setLongitude(121.5246077);
 
-        }
+        }*/
 
         if (myLoc != null) {
 
