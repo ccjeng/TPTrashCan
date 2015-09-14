@@ -240,7 +240,7 @@ public class MainActivity extends ActionBarActivity
 
         String[] drawer_menu = this.getResources().getStringArray(R.array.drawer_menu);
 
-        DrawerItem[] drawerItem = new DrawerItem[4];
+        DrawerItem[] drawerItem = new DrawerItem[3];
 
         drawerItem[0] = new DrawerItem(new IconicsDrawable(this)
                 .icon(GoogleMaterial.Icon.gmd_settings)
@@ -257,12 +257,6 @@ public class MainActivity extends ActionBarActivity
                 .color(Color.GRAY)
                 .sizeDp(24),
                 drawer_menu[2]);
-        drawerItem[3] = new DrawerItem(new IconicsDrawable(this)
-                .icon(GoogleMaterial.Icon.gmd_my_location)
-                .color(Color.GRAY)
-                .sizeDp(24),
-                drawer_menu[3]);
-
 
         DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_item, drawerItem);
         mLsvDrawerMenu.setAdapter(adapter);
@@ -301,10 +295,6 @@ public class MainActivity extends ActionBarActivity
             case 2:
                 startActivity(new Intent(Intent.ACTION_VIEW,
                         Uri.parse("market://details?id=com.ccjeng.tptrashcan")));
-                break;
-            case 3:
-                startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://bin.ccjeng.com")));
                 break;
         }
 

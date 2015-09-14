@@ -15,7 +15,6 @@
         <item>設定</item>
         <item>關於</item>
         <item>建議與評價</item>
-        <item>網頁版</item>
     </string-array>
 
     <string name="pref_distance">查詢範圍</string>
