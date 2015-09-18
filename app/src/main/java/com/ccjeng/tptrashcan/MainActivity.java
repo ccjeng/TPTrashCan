@@ -39,6 +39,7 @@ import com.ccjeng.tptrashcan.utils.Analytics;
 import com.ccjeng.tptrashcan.utils.Utils;
 import com.ccjeng.tptrashcan.utils.Version;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.common.ConnectionResult;
@@ -702,7 +703,13 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void adView() {
-        adView = (AdView) findViewById(R.id.adView);
+        LinearLayout adBannerLayout = (LinearLayout) findViewById(R.id.footerLayout);
+
+        adView = new AdView(this);
+        adView.setAdUnitId(TPTrashCan.ADMOB_UNIT_ID);
+        adView.setAdSize(AdSize.SMART_BANNER);
+        adBannerLayout.addView(adView);
+
         AdRequest adRequest;
 
         if (TPTrashCan.APPDEBUG) {
@@ -712,6 +719,7 @@ public class MainActivity extends ActionBarActivity
                     .addTestDevice(TPTrashCan.ADMOB_TEST_DEVICE_ID)
                     .build();
         } else {
+
             adRequest = new AdRequest.Builder().build();
 
         }

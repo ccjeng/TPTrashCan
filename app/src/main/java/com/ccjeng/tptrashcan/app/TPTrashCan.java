@@ -25,6 +25,7 @@ public class TPTrashCan extends Application {
 
     //Admob
     public static final String ADMOB_TEST_DEVICE_ID = "DF9E888CAA233DE54A7FD15B3B1A1522";
+    public static final String ADMOB_UNIT_ID = "ca-app-pub-6914084100751028/2129470418";
     //Parse
     private static final String PARSE_APPLICATION_ID = "5fzYdG6YMpMPKBNSqvzhEL1OVoXgcVvlCAghW09Q";
     private static final String PARSE_CLIENT_KEY = "FOdbIafjvlxcuVFEECLPK4vd6K876P5pJsQ2Wu5G";
