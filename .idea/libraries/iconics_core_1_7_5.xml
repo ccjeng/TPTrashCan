@@ -5,6 +5,8 @@
       <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mikepenz/iconics-core/1.7.5/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mikepenz/iconics-core/1.7.5/b3b67757cb128246ebcd989978c025c5407bb72d/iconics-core-1.7.5-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
