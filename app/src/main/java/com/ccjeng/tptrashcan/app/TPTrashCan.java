@@ -18,7 +18,7 @@ import java.util.HashMap;
  */
 public class TPTrashCan extends Application {
     // Debugging switch 
-    public static final boolean APPDEBUG = true;
+    public static final boolean APPDEBUG = false;
 
     // Debugging tag for the application
     public static final String APPTAG = Application.class.getSimpleName();

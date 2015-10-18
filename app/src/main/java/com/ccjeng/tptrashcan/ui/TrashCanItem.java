@@ -11,7 +11,7 @@ import com.parse.ParseQuery;
 
 import java.text.DecimalFormat;
 
-@ParseClassName("TPE100415")
+@ParseClassName("TPE101815")
 public class TrashCanItem extends ParseObject {
 
     public String getId() {
@@ -46,8 +46,6 @@ public class TrashCanItem extends ParseObject {
         double radians = getLocation().distanceInRadiansTo(current);
 
         return Math.toDegrees(radians);
-
-        //return radians;
     }
 
     public String getDistance(ParseGeoPoint current) {

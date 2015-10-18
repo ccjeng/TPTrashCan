@@ -124,8 +124,8 @@ public class InfoActivity extends ActionBarActivity
         memo = bundle.getString("memo");
         //objectId = bundle.getString("objectId");
 
-        addressView.setText("位置：" + address);
-        memoView.setText(memo);
+        //addressView.setText("位置：" + address);
+        //memoView.setText(memo);
 
 
         // Set up the map fragment
@@ -163,8 +163,6 @@ public class InfoActivity extends ActionBarActivity
         polylineOpt.add(from, to).color(Color.BLUE).width(5);
 
         line = map.addPolyline(polylineOpt);
-
-        //MapUtils.DrawArrowHead(map, from, to);
 
     }
 
