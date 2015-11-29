@@ -7,8 +7,8 @@ android {
         applicationId "com.ccjeng.tptrashcan"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 8
-        versionName '1.0.4.101815TC'
+        versionCode 9
+        versionName '1.0.5.112915TC'
     }
     buildTypes {
         release {
@@ -22,7 +22,7 @@ android {
 
 dependencies {
     compile fileTree(include: 'Parse-*.jar', dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23'
+    compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.android.gms:play-services:7.3.0'
     compile 'com.parse.bolts:bolts-android:1.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
