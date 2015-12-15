@@ -13,13 +13,12 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -30,10 +29,9 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ccjeng.tptrashcan.app.TPTrashCan;
-import com.ccjeng.tptrashcan.ui.DrawerItem;
-import com.ccjeng.tptrashcan.ui.DrawerItemAdapter;
 import com.ccjeng.tptrashcan.ui.TrashCanItem;
 import com.ccjeng.tptrashcan.utils.Analytics;
 import com.ccjeng.tptrashcan.utils.Utils;
@@ -52,7 +50,6 @@ import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.pnikosis.materialishprogress.ProgressWheel;
@@ -64,24 +61,19 @@ import butterknife.ButterKnife;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends AppCompatActivity
         implements LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         SwipeRefreshLayout.OnRefreshListener{
 
     private static final String TAG = TPTrashCan.class.getSimpleName();
-    private ActionBarDrawerToggle mDrawerToggle;
-    private ActionBar actionbar;
 
-    @Bind(R.id.lsv_drawer_menu)
-    ListView mLsvDrawerMenu;
+    @Bind(R.id.navigation)
+    NavigationView navigation;
 
-    @Bind(R.id.llv_left_drawer)
-    LinearLayout mLlvDrawerContent;
-
-    @Bind(R.id.drw_layout)
-    DrawerLayout mDrawerLayout;
+    @Bind(R.id.drawerlayout)
+    DrawerLayout drawerLayout;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -95,9 +87,6 @@ public class MainActivity extends ActionBarActivity
     @Bind(R.id.pull_to_refresh)
     SwipeRefreshLayout mSwipeLayout;
     public static final int REFRESH_DELAY = 1000;
-
-    // 記錄被選擇的選單指標用
-    private int mCurrentMenuItemPosition = -1;
 
     private AdView adView;
     private int distance;
@@ -156,9 +145,13 @@ public class MainActivity extends ActionBarActivity
         ga = new Analytics();
         ga.trackerPage(this);
 
+
+        if (TPTrashCan.APPDEBUG) {
+            Toast.makeText(this,"Debug Mode", Toast.LENGTH_LONG).show();
+        }
+
         initActionBar();
         initDrawer();
-        initDrawerList();
 
         getPref();
         adView();
@@ -203,119 +196,66 @@ public class MainActivity extends ActionBarActivity
         toolbar.setNavigationIcon(new IconicsDrawable(this)
                 .icon(GoogleMaterial.Icon.gmd_menu)
                 .color(Color.WHITE)
-                .actionBarSize());
-
-        actionbar = getSupportActionBar();
+                .actionBar());
     }
 
     private void initDrawer() {
-        // 設定 Drawer 的影子
-        //mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                mDrawerLayout,    // 讓 Drawer Toggle 知道母體介面是誰
-                R.mipmap.ic_drawer, // Drawer 的 Icon
-                R.string.app_name, // Drawer 被打開時的描述
-                R.string.app_name // Drawer 被關閉時的描述
-        ) {
-            //被打開後要做的事情
+        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onDrawerOpened(View drawerView) {
-                // 將 Title 設定為自定義的文字
-                actionbar.setTitle(R.string.app_name);
-            }
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                switch (id) {
+                    case R.id.navSetting:
+                        startActivity(new Intent(MainActivity.this, Prefs.class));
+                        break;
+                    case R.id.navAbout:
+                        new LibsBuilder()
+                                //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
+                                .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                                .withAboutIconShown(true)
+                                .withAboutVersionShown(true)
+                                .withAboutAppName(getString(R.string.app_name))
+                                .withActivityTitle(getString(R.string.activity_about))
+                                .withAboutDescription(getString(R.string.license))
+                                        //start the activity
+                                .start(MainActivity.this);
+                        break;
+                    case R.id.navSuggest:
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("market://details?id=com.ccjeng.tptrashcan")));
+                        break;
 
-            //被關上後要做的事情
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // 將 Title 設定回 APP 的名稱
-                actionbar.setTitle(R.string.app_name);
-            }
-        };
-
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-    }
-
-    private void initDrawerList() {
-
-        String[] drawer_menu = this.getResources().getStringArray(R.array.drawer_menu);
-
-        DrawerItem[] drawerItem = new DrawerItem[3];
-
-        drawerItem[0] = new DrawerItem(new IconicsDrawable(this)
-                .icon(GoogleMaterial.Icon.gmd_settings)
-                .color(Color.GRAY)
-                .sizeDp(24),
-                drawer_menu[0]);
-        drawerItem[1] = new DrawerItem(new IconicsDrawable(this)
-                .icon(GoogleMaterial.Icon.gmd_info)
-                .color(Color.GRAY)
-                .sizeDp(24),
-                drawer_menu[1]);
-        drawerItem[2] = new DrawerItem(new IconicsDrawable(this)
-                .icon(GoogleMaterial.Icon.gmd_thumb_up)
-                .color(Color.GRAY)
-                .sizeDp(24),
-                drawer_menu[2]);
-
-        DrawerItemAdapter adapter = new DrawerItemAdapter(this, R.layout.drawer_item, drawerItem);
-        mLsvDrawerMenu.setAdapter(adapter);
-
-        // 當清單選項的子物件被點擊時要做的動作
-        mLsvDrawerMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                selectMenuItem(position);
+                }
+                return false;
             }
         });
 
-    }
+        navigation.getMenu().findItem(R.id.navSetting).setIcon(new IconicsDrawable(this)
+                .icon(GoogleMaterial.Icon.gmd_settings)
+                .color(Color.GRAY)
+                .sizeDp(24));
 
-    private void selectMenuItem(int position) {
-        mCurrentMenuItemPosition = position;
+        navigation.getMenu().findItem(R.id.navAbout).setIcon(new IconicsDrawable(this)
+                .icon(GoogleMaterial.Icon.gmd_info)
+                .color(Color.GRAY)
+                .sizeDp(24));
 
-        switch (mCurrentMenuItemPosition) {
-            case 0:
-                startActivity(new Intent(this, Prefs.class));
-                break;
-            case 1:
-                new LibsBuilder()
-                        //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
-                        .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                        .withAboutIconShown(true)
-                        .withAboutVersionShown(true)
-                        .withAboutAppName(getString(R.string.app_name))
-                        .withActivityTitle(getString(R.string.activity_about))
-                        .withAboutDescription(getString(R.string.license))
-                                //start the activity
-                        .start(this);
-                break;
-            case 2:
-                startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=com.ccjeng.tptrashcan")));
-                break;
-        }
+        navigation.getMenu().findItem(R.id.navSuggest).setIcon(new IconicsDrawable(this)
+                .icon(GoogleMaterial.Icon.gmd_thumb_up)
+                .color(Color.GRAY)
+                .sizeDp(24));
 
-        // 將選單的子物件設定為被選擇的狀態
-        mLsvDrawerMenu.setItemChecked(position, true);
-
-        // 關掉 Drawer
-        mDrawerLayout.closeDrawer(mLlvDrawerContent);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
 
@@ -330,7 +270,7 @@ public class MainActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
 

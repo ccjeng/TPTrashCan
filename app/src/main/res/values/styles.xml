@@ -18,5 +18,8 @@
         <!-- 其他可用項目 colorControlNormal, colorControlActivated, colorControlHighlight, colorSwitchThumbNormal -->
     </style>
 
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">18sp</item>
+    </style>
 
 </resources>

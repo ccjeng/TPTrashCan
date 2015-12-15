@@ -3,6 +3,7 @@ package com.ccjeng.tptrashcan.app;
 import android.app.Application;
 import android.location.Location;
 
+import com.ccjeng.tptrashcan.BuildConfig;
 import com.ccjeng.tptrashcan.R;
 import com.ccjeng.tptrashcan.ui.TrashCanItem;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -18,7 +19,7 @@ import java.util.HashMap;
  */
 public class TPTrashCan extends Application {
     // Debugging switch 
-    public static final boolean APPDEBUG = true;
+    public static final boolean APPDEBUG = BuildConfig.DEBUG;
 
     // Debugging tag for the application
     public static final String APPTAG = Application.class.getSimpleName();
@@ -67,6 +68,11 @@ public class TPTrashCan extends Application {
     //Global variable for current location
     private static Location mLocation;
     public static Location getCurrentLocation(){
+        if (mLocation == null) {
+            mLocation = new Location("");
+            mLocation.setLatitude(24.8979347);
+            mLocation.setLongitude(121.5393508);
+        }
         return mLocation;
     }
     public static void setCurrentLocation(Location l){

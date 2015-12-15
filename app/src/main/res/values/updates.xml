@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:ignore="MissingTranslation">
 <string-array name="updates">
     	<item>1.0.5\n更新垃圾桶資料
     	</item>
