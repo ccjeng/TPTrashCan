@@ -7,8 +7,8 @@ android {
         applicationId "com.ccjeng.tptrashcan"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 9
-        versionName '1.0.5.112915TC'
+        versionCode 10
+        versionName '1.1.0.121715TC'
     }
     buildTypes {
         release {

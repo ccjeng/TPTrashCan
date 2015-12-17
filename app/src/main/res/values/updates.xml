@@ -3,7 +3,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	tools:ignore="MissingTranslation">
 <string-array name="updates">
-    	<item>1.0.5\n更新垃圾桶資料
+    	<item>1.1.0\n更新垃圾桶資料\n改善介面
     	</item>
 </string-array>
 </resources>

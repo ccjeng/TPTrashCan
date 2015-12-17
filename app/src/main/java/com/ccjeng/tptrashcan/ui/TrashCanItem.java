@@ -11,7 +11,7 @@ import com.parse.ParseQuery;
 
 import java.text.DecimalFormat;
 
-@ParseClassName("TPE112515")
+@ParseClassName("TPE121715")
 public class TrashCanItem extends ParseObject {
 
     public String getId() {
