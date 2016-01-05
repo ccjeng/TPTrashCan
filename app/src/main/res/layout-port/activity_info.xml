@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/write"
     android:orientation="vertical"
-    tools:context=".InfoActivity">
+    tools:context=".view.InfoActivity">
 
     <include
         android:id="@+id/toolbar"

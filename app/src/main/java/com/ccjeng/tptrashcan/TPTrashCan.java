@@ -1,4 +1,4 @@
-package com.ccjeng.tptrashcan.app;
+package com.ccjeng.tptrashcan;
 
 import android.app.Application;
 import android.location.Location;

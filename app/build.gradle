@@ -7,8 +7,8 @@ android {
         applicationId "com.ccjeng.tptrashcan"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 10
-        versionName '1.1.0.121715TC'
+        versionCode 11
+        versionName '1.1.1.010516TC'
     }
     buildTypes {
         release {
@@ -44,4 +44,6 @@ dependencies {
     }
     compile files('libs/admob-adapter-1.0.0-1505261651-830485e.jar')
     compile files('libs/vpadn-sdk-obf431-82605102-1506291043-d57fd2a.jar')
+    compile files('libs/FacebookAdapter.jar')
+    compile files('libs/AudienceNetwork.jar')
 }

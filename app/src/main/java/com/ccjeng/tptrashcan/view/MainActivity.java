@@ -1,4 +1,4 @@
-package com.ccjeng.tptrashcan;
+package com.ccjeng.tptrashcan.view;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -31,7 +31,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ccjeng.tptrashcan.app.TPTrashCan;
+import com.ccjeng.tptrashcan.R;
+import com.ccjeng.tptrashcan.TPTrashCan;
 import com.ccjeng.tptrashcan.ui.TrashCanItem;
 import com.ccjeng.tptrashcan.utils.Analytics;
 import com.ccjeng.tptrashcan.utils.Utils;
@@ -144,11 +145,6 @@ public class MainActivity extends AppCompatActivity
 
         ga = new Analytics();
         ga.trackerPage(this);
-
-
-        if (TPTrashCan.APPDEBUG) {
-            Toast.makeText(this,"Debug Mode", Toast.LENGTH_LONG).show();
-        }
 
         initActionBar();
         initDrawer();

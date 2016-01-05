@@ -1,10 +1,9 @@
-package com.ccjeng.tptrashcan;
+package com.ccjeng.tptrashcan.view;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.ccjeng.tptrashcan.app.TPTrashCan;
+import com.ccjeng.tptrashcan.R;
+import com.ccjeng.tptrashcan.TPTrashCan;
 import com.ccjeng.tptrashcan.utils.Analytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.common.ConnectionResult;
@@ -99,7 +99,7 @@ public class InfoActivity extends ActionBarActivity
         toolbar.setNavigationIcon(new IconicsDrawable(this)
                 .icon(GoogleMaterial.Icon.gmd_arrow_back)
                 .color(Color.WHITE)
-                .actionBarSize());
+                .actionBar());
 
         // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
@@ -189,7 +189,7 @@ public class InfoActivity extends ActionBarActivity
         getMenuInflater().inflate(R.menu.info, menu);
 
         MenuItem menuItem1 = menu.findItem(R.id.menu_navi);
-        menuItem1.setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_navigation).actionBarSize().color(Color.WHITE));
+        menuItem1.setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_navigation).actionBar().color(Color.WHITE));
 
         return true;
     }
@@ -328,6 +328,7 @@ public class InfoActivity extends ActionBarActivity
     public void onConnectionSuspended(int i) {
         Log.i(TAG, "GoogleApiClient connection has been suspend");
     }
+
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.i(TAG, "GoogleApiClient connection failed");
