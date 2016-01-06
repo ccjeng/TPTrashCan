@@ -418,7 +418,7 @@ public class MainActivity extends AppCompatActivity
                     TextView distanceView = (TextView) view.findViewById(R.id.distance_view);
 
                     regionView.setText(trash.getRegion());
-                    distanceView.setText(trash.getDistance(Utils.geoPointFromLocation(myLoc)).toString());
+                    distanceView.setText(trash.getDistance(Utils.geoPointFromLocation(myLoc)));
                     addressView.setText(trash.getFullAddress());
 
                     return view;
@@ -665,7 +665,6 @@ public class MainActivity extends AppCompatActivity
 
     protected final Dialog onCreateDialog(final int id) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //builder.setIcon(android.R.drawable.ic_dialog_info);
 
         builder.setIcon(new IconicsDrawable(this)
                 .icon(GoogleMaterial.Icon.gmd_info)
