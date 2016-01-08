@@ -4,6 +4,7 @@ package com.ccjeng.tptrashcan.ui;
  * Data model for a trash item.
  */
 
+import com.ccjeng.tptrashcan.TPTrashCan;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -11,7 +12,7 @@ import com.parse.ParseQuery;
 
 import java.text.DecimalFormat;
 
-@ParseClassName("TPE121715")
+@ParseClassName(TPTrashCan.PARSE_CLASS_NAME)
 public class TrashCanItem extends ParseObject {
 
     public String getId() {

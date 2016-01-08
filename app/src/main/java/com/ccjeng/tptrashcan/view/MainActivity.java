@@ -444,7 +444,7 @@ public class MainActivity extends AppCompatActivity
                                 + getString(R.string.data_not_found);
 
                         Crouton.makeText(MainActivity.this, msg, Style.CONFIRM,
-                                (ViewGroup)findViewById(R.id.croutonview)).show();
+                                (ViewGroup) findViewById(R.id.croutonview)).show();
                     }
                 }
             });
@@ -623,7 +623,10 @@ public class MainActivity extends AppCompatActivity
         bundle.putString("toLng", String.valueOf(item.getLocation().getLongitude()));
 
         bundle.putString("address", item.getFullAddress());
+        bundle.putString("address1", item.getAddress());
         bundle.putString("memo", item.getMemo());
+        bundle.putInt("rowcount", rowcount);
+
         //bundle.putString("objectId", item.getObjectId());
 
         intent.putExtras(bundle);

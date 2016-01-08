@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.ccjeng.tptrashcan.R;
 import com.ccjeng.tptrashcan.TPTrashCan;
 import com.ccjeng.tptrashcan.utils.Analytics;
+import com.ccjeng.tptrashcan.utils.Utils;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -27,11 +28,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -74,8 +82,9 @@ public class InfoActivity extends ActionBarActivity
     private String strToLat = "";
     private String strToLng = "";
 
-    private String address;
+    private String address, address1;
     private String memo;
+    private Integer rowcount;
     //private String objectId;
 
     // Map fragment
@@ -83,6 +92,7 @@ public class InfoActivity extends ActionBarActivity
     private Analytics ga;
 
     private Polyline line;
+    private Marker markerTrashCan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +131,9 @@ public class InfoActivity extends ActionBarActivity
         strTo = strToLat + "," + strToLng;
 
         address = bundle.getString("address");
+        address1 = bundle.getString("address1");
         memo = bundle.getString("memo");
+        rowcount = bundle.getInt("rowcount");
         //objectId = bundle.getString("objectId");
 
         //addressView.setText("位置：" + address);
@@ -163,6 +175,8 @@ public class InfoActivity extends ActionBarActivity
         polylineOpt.add(from, to).color(Color.BLUE).width(5);
 
         line = map.addPolyline(polylineOpt);
+
+        drawNearTrashCan();
 
     }
 
@@ -332,5 +346,47 @@ public class InfoActivity extends ActionBarActivity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.i(TAG, "GoogleApiClient connection failed");
+    }
+
+    private void drawNearTrashCan(){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(TPTrashCan.PARSE_CLASS_NAME);
+
+        Location myLoc = new Location("");
+        myLoc.setLatitude(Double.valueOf(strToLat));
+        myLoc.setLongitude(Double.valueOf(strToLng));
+
+
+        query.whereWithinKilometers("location"
+                , Utils.geoPointFromLocation(myLoc)
+                , 1
+        );
+
+        query.whereNotEqualTo("address", address1);
+
+        query.setLimit(rowcount);
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> items, ParseException e) {
+                if (e == null) {
+
+                    int i = 0;
+
+                    for (i = 0; i < items.size(); i++) {
+                        //Marker
+                        MarkerOptions markerOption = new MarkerOptions();
+                        markerOption.position(new LatLng(items.get(i).getParseGeoPoint("location").getLatitude()
+                                , items.get(i).getParseGeoPoint("location").getLongitude()));
+                        markerOption.title(items.get(i).get("road").toString() + items.get(i).get("address").toString());
+                        markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.bullet_red));
+
+                        markerTrashCan = map.addMarker(markerOption);
+
+                    }
+
+                } else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+            }
+        });
     }
 }
