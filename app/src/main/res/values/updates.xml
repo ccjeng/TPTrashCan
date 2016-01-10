@@ -3,7 +3,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	tools:ignore="MissingTranslation">
 <string-array name="updates">
-    	<item>1.1.1\n修正一些錯誤
+    	<item>1.1.2\n修正Android4.1查無資料的問題\n在地圖上顯示鄰近的垃圾桶
     	</item>
 </string-array>
 </resources>
