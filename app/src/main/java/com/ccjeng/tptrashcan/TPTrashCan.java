@@ -30,7 +30,7 @@ public class TPTrashCan extends Application {
     //Parse
     private static final String PARSE_APPLICATION_ID = "5fzYdG6YMpMPKBNSqvzhEL1OVoXgcVvlCAghW09Q";
     private static final String PARSE_CLIENT_KEY = "FOdbIafjvlxcuVFEECLPK4vd6K876P5pJsQ2Wu5G";
-    public  static final String PARSE_CLASS_NAME = "TPE121715";
+    public  static final String PARSE_CLASS_NAME = "TPE012316";
 
 
     @Override
