@@ -11,32 +11,29 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ccjeng.tptrashcan.R;
 import com.ccjeng.tptrashcan.TPTrashCan;
-import com.ccjeng.tptrashcan.ui.TrashCanItem;
+import com.ccjeng.tptrashcan.adapter.TrashCan;
 import com.ccjeng.tptrashcan.utils.Analytics;
-import com.ccjeng.tptrashcan.utils.Utils;
 import com.ccjeng.tptrashcan.utils.Version;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -47,28 +44,30 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
-import com.pnikosis.materialishprogress.ProgressWheel;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class MainActivity extends AppCompatActivity
         implements LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        SwipeRefreshLayout.OnRefreshListener{
+        OnMapReadyCallback {
 
-    private static final String TAG = TPTrashCan.class.getSimpleName();
+    private static final String TAG = "MainActivity";
 
     @Bind(R.id.navigation)
     NavigationView navigation;
@@ -79,21 +78,17 @@ public class MainActivity extends AppCompatActivity
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.trashcanList)
-    ListView trashcanList;
-
-    @Bind(R.id.progress_wheel)
-    ProgressWheel progressWheel;
-
-    @Bind(R.id.pull_to_refresh)
-    SwipeRefreshLayout mSwipeLayout;
-    public static final int REFRESH_DELAY = 1000;
-
     private AdView adView;
     private int distance;
     private int rowcount;
     private static final int DIALOG_WELCOME = 1;
     private static final int DIALOG_UPDATE = 2;
+    // Map fragment
+    private MapFragment mapFragment;
+    private GoogleMap mMap;
+
+    private Polyline line;
+    private Marker markerTrashCan;
 
     /*
   * Define a request code to send to Google Play services This code is returned in
@@ -121,9 +116,6 @@ public class MainActivity extends AppCompatActivity
     private static final long FAST_INTERVAL_CEILING_IN_MILLISECONDS = MILLISECONDS_PER_SECOND
             * FAST_CEILING_IN_SECONDS;
 
-    // Adapter for the Parse query
-    private ParseQueryAdapter<TrashCanItem> trashcanQueryAdapter;
-
     // Fields for helping process map and location changes
     private Location lastLocation;
     private Location currentLocation;
@@ -149,13 +141,16 @@ public class MainActivity extends AppCompatActivity
         initActionBar();
         initDrawer();
 
-        getPref();
+        //getPref();
         adView();
+
+        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
 
 
         if (Version.isNewInstallation(this)) {
             this.showDialog(DIALOG_WELCOME);
-        } else
+        }
+        else
         if (Version.newVersionInstalled(this)) {
             this.showDialog(DIALOG_UPDATE);
         }
@@ -172,17 +167,12 @@ public class MainActivity extends AppCompatActivity
             }
             //parseQuery();
 
+
         } else {
 
-            Crouton.makeText(MainActivity.this, R.string.network_error, Style.ALERT,
-                    (ViewGroup)findViewById(R.id.croutonview)).show();
+            Toast.makeText(this, R.string.network_error, Toast.LENGTH_LONG).show();
         }
 
-
-        mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light, android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
 
 
     }
@@ -202,9 +192,6 @@ public class MainActivity extends AppCompatActivity
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 int id = menuItem.getItemId();
                 switch (id) {
-                    case R.id.navSetting:
-                        startActivity(new Intent(MainActivity.this, Prefs.class));
-                        break;
                     case R.id.navAbout:
                         new LibsBuilder()
                                 //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
@@ -226,11 +213,6 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
-
-        navigation.getMenu().findItem(R.id.navSetting).setIcon(new IconicsDrawable(this)
-                .icon(GoogleMaterial.Icon.gmd_settings)
-                .color(Color.GRAY)
-                .sizeDp(24));
 
         navigation.getMenu().findItem(R.id.navAbout).setIcon(new IconicsDrawable(this)
                 .icon(GoogleMaterial.Icon.gmd_info)
@@ -305,7 +287,7 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
 
-        getPref();
+        //getPref();
         if (adView != null)
             adView.pause();
 
@@ -325,7 +307,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        getPref();
+        //getPref();
         if (adView != null)
             adView.resume();
 
@@ -341,129 +323,24 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         if (adView != null)
             adView.destroy();
-        Crouton.cancelAllCroutons();
         super.onDestroy();
-    }
-
-    /*
-        SwipeRefreshLayout
-     */
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                parseQuery();
-                mSwipeLayout.setRefreshing(false);
-            }
-        }, REFRESH_DELAY);
-
     }
 
     private void parseQuery() {
 
         myLoc = (currentLocation == null) ? lastLocation : currentLocation;
 
-        //fake location
-       /* if (TPTrashCan.APPDEBUG) {
-            myLoc = new Location("");
-            //myLoc.setLatitude(24.8979347);
-            //myLoc.setLongitude(121.5393508);
-
-            //101
-            //myLoc.setLatitude(25.0339031);
-            //myLoc.setLongitude(121.5645098);
-            //Taipei City
-            myLoc.setLatitude(25.0950492);
-            myLoc.setLongitude(121.5246077);
-
-        }*/
-
         if (myLoc != null) {
 
-            //set current location to global veriable
-            //TPTrashCan.setCurrentLocation(myLoc);
+            mapFragment.getMapAsync(this);
 
             if (TPTrashCan.APPDEBUG)
                 Log.d(TAG, "location = " + myLoc.toString());
 
-            // Set up a customized query
-            ParseQueryAdapter.QueryFactory<TrashCanItem> factory =
-                    new ParseQueryAdapter.QueryFactory<TrashCanItem>() {
-                        public ParseQuery<TrashCanItem> create() {
-
-                            ParseQuery<TrashCanItem> query = TrashCanItem.getQuery();
-
-                            query.whereWithinKilometers("location"
-                                    , Utils.geoPointFromLocation(myLoc)
-                                    , distance + 1
-                            );
-
-                            query.setLimit(rowcount);
-
-                            return query;
-                        }
-                    };
-
-            // Set up the query adapter
-            trashcanQueryAdapter = new ParseQueryAdapter<TrashCanItem>(this, factory) {
-                @Override
-                public View getItemView(TrashCanItem trash, View view, ViewGroup parent) {
-                    if (view == null) {
-                        view = View.inflate(getContext(), R.layout.trashcan_item, null);
-                    }
-
-                    TextView regionView = (TextView) view.findViewById(R.id.region_view);
-                    TextView addressView = (TextView) view.findViewById(R.id.address_view);
-                    TextView distanceView = (TextView) view.findViewById(R.id.distance_view);
-
-                    regionView.setText(trash.getRegion());
-                    distanceView.setText(trash.getDistance(Utils.geoPointFromLocation(myLoc)));
-                    addressView.setText(trash.getFullAddress());
-
-                    return view;
-                }
-            };
-
-            trashcanQueryAdapter.setPaginationEnabled(false);
-            trashcanQueryAdapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<TrashCanItem>() {
-
-                @Override
-                public void onLoading() {
-                    progressWheel.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onLoaded(List<TrashCanItem> objects, Exception e) {
-
-                    progressWheel.setVisibility(View.GONE);
-
-                    //No data
-                    if (trashcanList.getCount() == 0) {
-                        String msg = String.valueOf(distance) + "公里"
-                                + getString(R.string.data_not_found);
-
-                        Crouton.makeText(MainActivity.this, msg, Style.CONFIRM,
-                                (ViewGroup) findViewById(R.id.croutonview)).show();
-                    }
-                }
-            });
-
-            trashcanList.setAdapter(trashcanQueryAdapter);
-
-            // Set up the handler for an item's selection
-            trashcanList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final TrashCanItem item = trashcanQueryAdapter.getItem(position);
-                    //Open Detail Page
-                    goIntent(item);
-                }
-            });
 
         } else {
             //location error
-            Crouton.makeText(MainActivity.this, R.string.location_error, Style.ALERT,
-                    (ViewGroup)findViewById(R.id.croutonview)).show();
+            Toast.makeText(this, R.string.location_error, Toast.LENGTH_LONG).show();
         }
 
     }
@@ -563,8 +440,7 @@ public class MainActivity extends AppCompatActivity
 
         // 裝置沒有安裝Google Play服務
         if (errorCode == ConnectionResult.SERVICE_MISSING) {
-            Crouton.makeText(MainActivity.this, R.string.google_play_service_missing, Style.ALERT,
-                (ViewGroup)findViewById(R.id.croutonview)).show();
+            Toast.makeText(this, R.string.google_play_service_missing, Toast.LENGTH_LONG).show();
         }
 
     }
@@ -599,47 +475,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLocationChanged(Location location) {
         currentLocation = location;
-        if (lastLocation != null
-                && Utils.geoPointFromLocation(location)
-                .distanceInKilometersTo(Utils.geoPointFromLocation(lastLocation)) < 0.01) {
-            // If the location hasn't changed by more than 10 meters, ignore it.
-            return;
-        }
-        lastLocation = location;
     }
 
-    private void goIntent(TrashCanItem item) {
-
-        ga.trackEvent(this, "Location", "Region", item.getRegion(), 0);
-        ga.trackEvent(this, "Location", "Address", item.getFullAddress(), 0);
-
-        Intent intent = new Intent();
-        intent.setClass(this, InfoActivity.class);
-        Bundle bundle = new Bundle();
-
-        bundle.putString("fromLat", String.valueOf(myLoc.getLatitude()));
-        bundle.putString("fromLng", String.valueOf(myLoc.getLongitude()));
-        bundle.putString("toLat", String.valueOf(item.getLocation().getLatitude()));
-        bundle.putString("toLng", String.valueOf(item.getLocation().getLongitude()));
-
-        bundle.putString("address", item.getFullAddress());
-        bundle.putString("address1", item.getAddress());
-        bundle.putString("memo", item.getMemo());
-        bundle.putInt("rowcount", rowcount);
-
-        //bundle.putString("objectId", item.getObjectId());
-
-        intent.putExtras(bundle);
-        startActivityForResult(intent, 0);
-
-    }
-
+    /*
     private void getPref() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
         distance = Integer.valueOf(prefs.getString("distance", "1"));
         rowcount = Integer.valueOf(prefs.getString("rowcount", "20"));
     }
+    */
 
     private void adView() {
         LinearLayout adBannerLayout = (LinearLayout) findViewById(R.id.footerLayout);
@@ -677,7 +522,7 @@ public class MainActivity extends AppCompatActivity
         builder.setCancelable(true);
         builder.setPositiveButton(android.R.string.ok, null);
 
-        final Context context = this;
+        //final Context context = this;
 
         switch (id) {
             case DIALOG_WELCOME:
@@ -698,4 +543,56 @@ public class MainActivity extends AppCompatActivity
         return builder.create();
     }
 
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        LatLng currentLocation = new LatLng(myLoc.getLatitude(), myLoc.getLongitude());
+
+        map.setMyLocationEnabled(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17));
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        map.getUiSettings().setZoomControlsEnabled(true);
+
+        getTrashCan(map);
+
+    }
+
+    private void getTrashCan(final GoogleMap map) {
+
+        Firebase ref = new Firebase("https://tptrashcan.firebaseio.com/");
+        ref.keepSynced(true);
+
+        Query queryRef;
+
+        queryRef = ref.child("results"); //.orderByChild("region").equalTo("信義區");
+
+        queryRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                for (DataSnapshot keySnapshot : snapshot.getChildren()) {
+                    TrashCan can = keySnapshot.getValue(TrashCan.class);
+
+                    //Marker
+                    MarkerOptions markerOption = new MarkerOptions();
+                    markerOption.position(new LatLng(can.getLatitude(), can.getLongitude()));
+                    markerOption.title(can.getAddress());
+                    markerOption.snippet(can.getRegion());
+                    markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.bullet_red));
+
+                    markerTrashCan = map.addMarker(markerOption);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+                Log.d(TAG, "The read failed: " + error.getMessage());
+            }
+        });
+
+
+
+    }
 }

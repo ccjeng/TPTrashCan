@@ -20,34 +20,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true" />
 
-        <LinearLayout
-            android:id="@+id/croutonview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/toolbar"/>
-
-        <com.pnikosis.materialishprogress.ProgressWheel
-            android:id="@+id/progress_wheel"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            wheel:matProg_barColor="@color/color_progress"
-            wheel:matProg_progressIndeterminate="true"
-            android:visibility="gone"/>
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/pull_to_refresh"
-            android:layout_width="match_parent"
+        <fragment
+            android:id="@+id/map_fragment"
+            class="com.google.android.gms.maps.MapFragment"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
-            android:layout_above="@+id/footerLayout">
-            <ListView
-                android:id="@+id/trashcanList"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-        </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_above="@+id/footerLayout"
+            />
 
         <LinearLayout
             android:id="@+id/footerLayout"

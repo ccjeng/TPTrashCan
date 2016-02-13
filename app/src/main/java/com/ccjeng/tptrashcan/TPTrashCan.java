@@ -1,16 +1,11 @@
 package com.ccjeng.tptrashcan;
 
 import android.app.Application;
-import android.location.Location;
 
-import com.ccjeng.tptrashcan.BuildConfig;
-import com.ccjeng.tptrashcan.R;
-import com.ccjeng.tptrashcan.ui.TrashCanItem;
+import com.firebase.client.Firebase;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
-import com.parse.Parse;
-import com.parse.ParseObject;
 
 import java.util.HashMap;
 
@@ -27,18 +22,14 @@ public class TPTrashCan extends Application {
     //Admob
     public static final String ADMOB_TEST_DEVICE_ID = "DF9E888CAA233DE54A7FD15B3B1A1522";
     public static final String ADMOB_UNIT_ID = "ca-app-pub-6914084100751028/2129470418";
-    //Parse
-    private static final String PARSE_APPLICATION_ID = "5fzYdG6YMpMPKBNSqvzhEL1OVoXgcVvlCAghW09Q";
-    private static final String PARSE_CLIENT_KEY = "FOdbIafjvlxcuVFEECLPK4vd6K876P5pJsQ2Wu5G";
-    public  static final String PARSE_CLASS_NAME = "TPE012316";
 
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        ParseObject.registerSubclass(TrashCanItem.class);
-        Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
+        Firebase.setAndroidContext(this);
+        Firebase.getDefaultConfig().setPersistenceEnabled(true);
 
     }
 
@@ -66,17 +57,4 @@ public class TPTrashCan extends Application {
         return mTrackers.get(trackerId);
     }
 
-    //Global variable for current location
-    private static Location mLocation;
-    public static Location getCurrentLocation(){
-        if (mLocation == null) {
-            mLocation = new Location("");
-            mLocation.setLatitude(24.8979347);
-            mLocation.setLongitude(121.5393508);
-        }
-        return mLocation;
-    }
-    public static void setCurrentLocation(Location l){
-        mLocation = l;
-    }
 }
