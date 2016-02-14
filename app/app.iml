@@ -97,6 +97,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="butterknife-7.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-location-8.4.0" level="project" />
+    <orderEntry type="library" exported="" name="geofire-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="firebase-client-jvm-2.5.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-base-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-client-android-2.5.0" level="project" />

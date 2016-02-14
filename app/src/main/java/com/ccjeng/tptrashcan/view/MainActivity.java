@@ -34,6 +34,10 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -555,6 +559,8 @@ public class MainActivity extends AppCompatActivity
 
         getTrashCan(map);
 
+        //geoFire();
+
     }
 
     private void getTrashCan(final GoogleMap map) {
@@ -595,4 +601,43 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
+/*
+    private void geoFire(){
+
+        GeoFire geoFire = new GeoFire(new Firebase("https://tptrashcarrealtime.firebaseio.com/stg"));
+        //geoFire.setLocation("test", new GeoLocation(25.0792966, 121.4893481));
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(25.033, 121.565), 20);
+
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                Log.d(TAG, String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+                Log.d(TAG, String.format("Key %s is no longer in the search area", key));
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+                Log.d(TAG, String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                Log.d(TAG, "All initial data has been loaded and events have been fired!");
+            }
+
+            @Override
+            public void onGeoQueryError(FirebaseError error) {
+                Log.d(TAG, "There was an error with this query: " + error);
+            }
+        });
+
+
+
+    }
+    */
 }
