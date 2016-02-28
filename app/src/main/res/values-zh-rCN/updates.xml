@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <string-array name="updates">
-    	<item>1.2.0\n改以地图模式显示
+    	<item>1.2.1\n修正功能表不正常縮合的問題
     	</item>
 </string-array>
 </resources>
