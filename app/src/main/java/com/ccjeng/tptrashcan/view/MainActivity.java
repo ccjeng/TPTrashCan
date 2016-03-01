@@ -4,16 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -36,10 +33,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
-import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.GeoQuery;
-import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -84,6 +77,7 @@ public class MainActivity extends AppCompatActivity
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
+    private ActionBarDrawerToggle actionBarDrawerToggle;
     private AdView adView;
     private int distance;
     private int rowcount;
@@ -185,10 +179,6 @@ public class MainActivity extends AppCompatActivity
 
     private void initActionBar() {
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(new IconicsDrawable(this)
-                .icon(GoogleMaterial.Icon.gmd_menu)
-                .color(Color.WHITE)
-                .actionBar());
     }
 
     private void initDrawer() {
@@ -239,7 +229,7 @@ public class MainActivity extends AppCompatActivity
                 .color(Color.GRAY)
                 .sizeDp(24));
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar
                 ,R.string.app_name, R.string.app_name){
 
             @Override
@@ -284,15 +274,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
     /*
     * Called when the Activity is no longer visible at all. Stop updates and disconnect.
