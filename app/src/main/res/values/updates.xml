@@ -3,7 +3,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	tools:ignore="MissingTranslation">
 <string-array name="updates">
-    	<item>1.2.2\n改善介面
+    	<item>1.2.3\n更新資料
     	</item>
 </string-array>
 </resources>
