@@ -10,9 +10,9 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,11 +28,6 @@ import com.ccjeng.tptrashcan.TPTrashCan;
 import com.ccjeng.tptrashcan.adapter.TrashCan;
 import com.ccjeng.tptrashcan.utils.Analytics;
 import com.ccjeng.tptrashcan.utils.Version;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
-import com.firebase.client.ValueEventListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -52,6 +47,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -555,6 +555,7 @@ public class MainActivity extends AppCompatActivity
                 builder.setMessage(getResources().getString(R.string.welcome_message));
                 break;
             case DIALOG_UPDATE:
+                /*
                 builder.setTitle(getString(R.string.changelog_title));
                 final String[] changes = getResources().getStringArray(R.array.updates);
                 final StringBuilder buf = new StringBuilder();
@@ -562,7 +563,7 @@ public class MainActivity extends AppCompatActivity
                     buf.append("\n\n");
                     buf.append(changes[i]);
                 }
-                builder.setMessage(buf.toString().trim());
+                builder.setMessage(buf.toString().trim());*/
                 break;
         }
         return builder.create();
@@ -580,20 +581,16 @@ public class MainActivity extends AppCompatActivity
 
         getTrashCan(map);
 
-        //geoFire();
-
     }
 
     private void getTrashCan(final GoogleMap map) {
 
-        Firebase ref = new Firebase("https://tptrashcan.firebaseio.com/");
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl("https://tptrashcan.firebaseio.com/results");
+
         ref.keepSynced(true);
 
-        Query queryRef;
-
-        queryRef = ref.child("results"); //.orderByChild("region").equalTo("信義區");
-
-        queryRef.addValueEventListener(new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
@@ -602,7 +599,7 @@ public class MainActivity extends AppCompatActivity
 
                     //Marker
                     MarkerOptions markerOption = new MarkerOptions();
-                    markerOption.position(new LatLng(can.getLatitude(), can.getLongitude()));
+                    markerOption.position(new LatLng(Double.valueOf(can.getLatitude()), Double.valueOf(can.getLongitude())));
                     markerOption.title(can.getAddress());
                     markerOption.snippet(can.getRegion());
                     markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.bullet_red));
@@ -614,51 +611,16 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onCancelled(FirebaseError error) {
-                Log.d(TAG, "The read failed: " + error.getMessage());
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
             }
+
         });
 
 
 
     }
 
-/*
-    private void geoFire(){
 
-        GeoFire geoFire = new GeoFire(new Firebase("https://tptrashcarrealtime.firebaseio.com/stg"));
-        //geoFire.setLocation("test", new GeoLocation(25.0792966, 121.4893481));
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(25.033, 121.565), 20);
-
-        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
-            @Override
-            public void onKeyEntered(String key, GeoLocation location) {
-                Log.d(TAG, String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
-            }
-
-            @Override
-            public void onKeyExited(String key) {
-                Log.d(TAG, String.format("Key %s is no longer in the search area", key));
-            }
-
-            @Override
-            public void onKeyMoved(String key, GeoLocation location) {
-                Log.d(TAG, String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
-            }
-
-            @Override
-            public void onGeoQueryReady() {
-                Log.d(TAG, "All initial data has been loaded and events have been fired!");
-            }
-
-            @Override
-            public void onGeoQueryError(FirebaseError error) {
-                Log.d(TAG, "There was an error with this query: " + error);
-            }
-        });
-
-
-
-    }
-    */
 }

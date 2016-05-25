@@ -7,8 +7,8 @@ public class TrashCan {
 
     public String address;
     public String region;
-    public double latitude;
-    public double longitude;
+    public String latitude;
+    public String longitude;
 
     public TrashCan() {
 
@@ -22,11 +22,11 @@ public class TrashCan {
         return region;
     }
 
-    public Double getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public Double getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 }

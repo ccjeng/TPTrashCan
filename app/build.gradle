@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
 
 android {
     compileSdkVersion 23
@@ -7,8 +9,8 @@ android {
         applicationId "com.ccjeng.tptrashcan"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 18
-        versionName '1.2.3.041016TC'
+        versionCode 19
+        versionName '1.2.4.052516TC'
     }
     buildTypes {
         release {
@@ -28,14 +30,14 @@ android {
 
 dependencies {
     //compile fileTree(include: 'Parse-*.jar', dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
-    compile 'com.google.android.gms:play-services-ads:8.4.0'
-    compile 'com.google.android.gms:play-services-maps:8.4.0'
-    compile 'com.google.android.gms:play-services-analytics:8.4.0'
-    compile 'com.google.android.gms:play-services-location:8.4.0'
-    compile 'com.firebase:firebase-client-android:2.5.0'
-    compile 'com.firebase:geofire:1.1.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.google.android.gms:play-services-ads:9.0.0'
+    compile 'com.google.android.gms:play-services-maps:9.0.0'
+    compile 'com.google.android.gms:play-services-analytics:9.0.0'
+    compile 'com.google.android.gms:play-services-location:9.0.0'
+    compile 'com.google.firebase:firebase-core:9.0.0'
+    compile 'com.google.firebase:firebase-database:9.0.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.mikepenz:iconics-core:2.5.11@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
