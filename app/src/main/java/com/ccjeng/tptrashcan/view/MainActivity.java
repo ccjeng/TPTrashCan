@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity
         }
         else
         if (Version.newVersionInstalled(this)) {
-            this.showDialog(DIALOG_UPDATE);
+          //  this.showDialog(DIALOG_UPDATE);
         }
 
         if (isNetworkConnected()) {
@@ -554,8 +554,8 @@ public class MainActivity extends AppCompatActivity
                 builder.setTitle(getResources().getString(R.string.welcome_title));
                 builder.setMessage(getResources().getString(R.string.welcome_message));
                 break;
-            case DIALOG_UPDATE:
-                /*
+           /*  case DIALOG_UPDATE:
+
                 builder.setTitle(getString(R.string.changelog_title));
                 final String[] changes = getResources().getStringArray(R.array.updates);
                 final StringBuilder buf = new StringBuilder();
@@ -563,8 +563,8 @@ public class MainActivity extends AppCompatActivity
                     buf.append("\n\n");
                     buf.append(changes[i]);
                 }
-                builder.setMessage(buf.toString().trim());*/
-                break;
+                builder.setMessage(buf.toString().trim());
+                break;*/
         }
         return builder.create();
     }
