@@ -1,6 +1,7 @@
 package com.ccjeng.tptrashcan;
 
 import android.app.Application;
+import android.os.Build;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
@@ -15,21 +16,14 @@ public class TPTrashCan extends Application {
     // Debugging switch 
     public static final boolean APPDEBUG = BuildConfig.DEBUG;
 
-    // Debugging tag for the application
-    public static final String APPTAG = Application.class.getSimpleName();
-
     //Admob
     public static final String ADMOB_TEST_DEVICE_ID = "3C8B080F4F918474804E2685BA46E2B3";
-    public static final String ADMOB_UNIT_ID = "ca-app-pub-6914084100751028/2129470418";
+    public static final String ADMOB_UNIT_ID = BuildConfig.ADMOB_UNIT_ID;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-    //    Firebase.setAndroidContext(this);
-    //    Firebase.getDefaultConfig().setPersistenceEnabled(true);
-
     }
 
 
