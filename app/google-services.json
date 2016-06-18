@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "318072628824",
+    "firebase_url": "https://tptrashcan.firebaseio.com",
+    "project_id": "tptrashcan",
+    "storage_bucket": "tptrashcan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318072628824:android:cba5009f826341e6",
+        "android_client_info": {
+          "package_name": "com.ccjeng.tptrashcan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "318072628824-efs70c9fnqqdb1ig08904mf4n6se90m2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVoxant3xOI2br6i273HCc4gwe25XtGbI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
