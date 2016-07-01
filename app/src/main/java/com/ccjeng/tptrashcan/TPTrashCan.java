@@ -1,7 +1,6 @@
 package com.ccjeng.tptrashcan;
 
 import android.app.Application;
-import android.os.Build;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
@@ -17,7 +16,7 @@ public class TPTrashCan extends Application {
     public static final boolean APPDEBUG = BuildConfig.DEBUG;
 
     //Admob
-    public static final String ADMOB_TEST_DEVICE_ID = "3C8B080F4F918474804E2685BA46E2B3";
+    public static final String ADMOB_TEST_DEVICE_ID = "E0D24CC8E2D30B8E918C6BA5B7754465";
     public static final String ADMOB_UNIT_ID = BuildConfig.ADMOB_UNIT_ID;
 
 
