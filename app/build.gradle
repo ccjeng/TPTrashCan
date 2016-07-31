@@ -3,13 +3,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '24.0.1'
     defaultConfig {
         applicationId "com.ccjeng.tptrashcan"
         minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 24
-        versionName '1.2.7.070216TC'
+        targetSdkVersion 21
+        versionCode 25
+        versionName '1.2.8.073116TC'
     }
     buildTypes {
         release {
@@ -41,18 +41,15 @@ dependencies {
     compile 'com.google.firebase:firebase-core:9.2.1'
     compile 'com.google.firebase:firebase-database:9.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile "com.mikepenz:iconics-core:2.7.1@aar"
-
+    compile 'com.mikepenz:iconics-core:2.7.1@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
     compile('com.mikepenz:aboutlibraries:5.7.1@aar') {
         transitive = true
     }
-
     compile 'com.facebook.android:audience-network-sdk:4.12.1'
     compile files('libs/FacebookAdapter.jar')
     compile files('libs/vpadn-sdk-obf453-71606102-1606171046-2512837.jar')
     compile files('libs/admob-adapter-1.0.0-1505261651-830485e.jar')
-
 }
 
 apply plugin: 'com.google.gms.google-services'

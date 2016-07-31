@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.ccjeng.tptrashcan.R;
 import com.ccjeng.tptrashcan.TPTrashCan;
+import com.ccjeng.tptrashcan.adapter.CustomInfoWindowAdapter;
 import com.ccjeng.tptrashcan.adapter.TrashCan;
 import com.ccjeng.tptrashcan.utils.Analytics;
 import com.ccjeng.tptrashcan.utils.Version;
@@ -603,6 +604,9 @@ public class MainActivity extends AppCompatActivity
                     markerOption.title(can.getAddress());
                     markerOption.snippet(can.getRegion());
                     markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.bullet_red));
+
+                    CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(MainActivity.this);
+                    map.setInfoWindowAdapter(adapter);
 
                     markerTrashCan = map.addMarker(markerOption);
 
