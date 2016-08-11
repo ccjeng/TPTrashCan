@@ -8,8 +8,8 @@ android {
         applicationId "com.ccjeng.tptrashcan"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 25
-        versionName '1.2.8.073116TC'
+        versionCode 26
+        versionName '1.2.9.081216TC'
     }
     buildTypes {
         release {
@@ -34,12 +34,13 @@ dependencies {
     //compile fileTree(include: 'Parse-*.jar', dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
-    compile 'com.google.android.gms:play-services-ads:9.2.1'
-    compile 'com.google.android.gms:play-services-maps:9.2.1'
-    compile 'com.google.android.gms:play-services-analytics:9.2.1'
-    compile 'com.google.android.gms:play-services-location:9.2.1'
-    compile 'com.google.firebase:firebase-core:9.2.1'
-    compile 'com.google.firebase:firebase-database:9.2.1'
+    compile 'com.google.android.gms:play-services-maps:9.4.0'
+    compile 'com.google.android.gms:play-services-analytics:9.4.0'
+    compile 'com.google.android.gms:play-services-location:9.4.0'
+    compile 'com.google.firebase:firebase-core:9.4.0'
+    compile 'com.google.firebase:firebase-database:9.4.0'
+    compile 'com.google.firebase:firebase-ads:9.4.0'
+    compile 'com.google.firebase:firebase-crash:9.4.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.mikepenz:iconics-core:2.7.1@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'

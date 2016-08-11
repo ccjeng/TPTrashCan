@@ -15,3 +15,11 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keep class com.google.ads.mediation.admob.AdMobAdapter {
+    *;
+}
+
+-keep class com.google.ads.mediation.AdUrlAdapter {
+    *;
+}
