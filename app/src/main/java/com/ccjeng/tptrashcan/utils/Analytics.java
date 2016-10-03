@@ -2,7 +2,7 @@ package com.ccjeng.tptrashcan.utils;
 
 import android.app.Activity;
 
-import com.ccjeng.tptrashcan.TPTrashCan;
+import com.ccjeng.tptrashcan.view.base.TPTrashCan;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 

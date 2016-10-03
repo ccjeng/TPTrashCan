@@ -3,9 +3,11 @@
     <group android:checkableBehavior="all">
         <item
             android:id="@+id/navAbout"
-            android:title="@string/activity_about"/>
+            android:title="@string/activity_about"
+            android:icon="@drawable/ic_exclamation_sign"/>
         <item
             android:id="@+id/navSuggest"
-            android:title="@string/activity_comments"/>
+            android:title="@string/activity_comments"
+            android:icon="@drawable/ic_thumbs_up"/>
     </group>
 </menu>

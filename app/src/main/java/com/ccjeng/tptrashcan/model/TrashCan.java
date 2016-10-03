@@ -1,4 +1,4 @@
-package com.ccjeng.tptrashcan.adapter;
+package com.ccjeng.tptrashcan.model;
 
 /**
  * Created by andycheng on 2016/2/12.

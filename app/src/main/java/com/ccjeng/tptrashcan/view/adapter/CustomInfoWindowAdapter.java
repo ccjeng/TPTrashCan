@@ -1,4 +1,4 @@
-package com.ccjeng.tptrashcan.adapter;
+package com.ccjeng.tptrashcan.view.adapter;
 
 import android.app.Activity;
 import android.view.View;

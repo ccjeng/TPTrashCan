@@ -8,8 +8,8 @@ android {
         applicationId "com.ccjeng.tptrashcan"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 26
-        versionName '1.2.9.081216TC'
+        versionCode 27
+        versionName '2.0.0.100516TC'
     }
     buildTypes {
         release {
@@ -32,25 +32,23 @@ android {
 
 dependencies {
     //compile fileTree(include: 'Parse-*.jar', dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
-    compile 'com.google.android.gms:play-services-maps:9.4.0'
-    compile 'com.google.android.gms:play-services-analytics:9.4.0'
-    compile 'com.google.android.gms:play-services-location:9.4.0'
-    compile 'com.google.firebase:firebase-core:9.4.0'
-    compile 'com.google.firebase:firebase-database:9.4.0'
-    compile 'com.google.firebase:firebase-ads:9.4.0'
-    compile 'com.google.firebase:firebase-crash:9.4.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.google.android.gms:play-services-maps:9.6.1'
+    compile 'com.google.android.gms:play-services-analytics:9.6.1'
+    compile 'com.google.android.gms:play-services-location:9.6.1'
+    compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.google.firebase:firebase-database:9.6.1'
+    compile 'com.google.firebase:firebase-ads:9.6.1'
+    compile 'com.google.firebase:firebase-crash:9.6.1'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.mikepenz:iconics-core:2.7.1@aar'
-    compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
     compile('com.mikepenz:aboutlibraries:5.7.1@aar') {
         transitive = true
     }
-    compile 'com.facebook.android:audience-network-sdk:4.12.1'
+    compile 'com.facebook.android:audience-network-sdk:4.15.0'
     compile files('libs/FacebookAdapter.jar')
-    compile files('libs/vpadn-sdk-obf453-71606102-1606171046-2512837.jar')
     compile files('libs/admob-adapter-1.0.0-1505261651-830485e.jar')
+    compile files('libs/vpadn-sdk-obf460-20906102-1609021438-69c7670.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'
