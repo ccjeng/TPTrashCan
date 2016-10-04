@@ -38,14 +38,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:gravity="bottom"
-                android:visibility="gone"
                 android:orientation="horizontal">
-                <!--<com.google.android.gms.ads.AdView
-                     android:id="@+id/adView"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     app:adSize="SMART_BANNER"
-                     app:adUnitId="ca-app-pub-6914084100751028/2129470418" />-->
             </LinearLayout>
         </RelativeLayout>
 
