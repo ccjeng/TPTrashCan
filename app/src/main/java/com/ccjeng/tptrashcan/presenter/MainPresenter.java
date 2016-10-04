@@ -2,14 +2,12 @@ package com.ccjeng.tptrashcan.presenter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.util.Log;
 
 import com.ccjeng.tptrashcan.R;
 import com.ccjeng.tptrashcan.model.TrashCan;
 import com.ccjeng.tptrashcan.presenter.base.BasePresenter;
-import com.ccjeng.tptrashcan.utils.MapUtils;
 import com.ccjeng.tptrashcan.utils.Utils;
 import com.ccjeng.tptrashcan.view.adapter.CustomInfoWindowAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,7 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static c.Device.TAG;
 
 /**
  * Created by andycheng on 2016/10/3.
@@ -34,6 +31,8 @@ import static c.Device.TAG;
 
 public class MainPresenter extends BasePresenter<MainView>
         implements OnMapReadyCallback, LocationConnectedListener {
+
+    private static final String TAG = "MainPresenter";
 
     private MainView view;
     private Context context;
@@ -52,12 +51,10 @@ public class MainPresenter extends BasePresenter<MainView>
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl("https://tptrashcan.firebaseio.com/results");
 
-        ref.keepSynced(true);
+        ref.keepSynced(false);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-
-                Bitmap bitmap = MapUtils.getBitmap(context, R.drawable.ic_trash);
 
                 for (DataSnapshot keySnapshot : snapshot.getChildren()) {
                     TrashCan can = keySnapshot.getValue(TrashCan.class);
@@ -67,7 +64,7 @@ public class MainPresenter extends BasePresenter<MainView>
                     markerOption.position(new LatLng(Double.valueOf(can.getLatitude()), Double.valueOf(can.getLongitude())));
                     markerOption.title(can.getAddress());
                     markerOption.snippet(can.getRegion());
-                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+                    markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.trash));
 
                     CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter((Activity) context);
                     map.setInfoWindowAdapter(adapter);
@@ -119,11 +116,11 @@ public class MainPresenter extends BasePresenter<MainView>
         locationService = new LocationService(context);
         locationService.setLocationConnectedListener(this);
 
-        if (Utils.isNetworkConnected(context)) {
-            locationService.connect();
-        } else {
+        if (!Utils.isNetworkConnected(context)) {
             view.showError(R.string.network_error);
         }
+
+        locationService.connect();
     }
 
     @Override

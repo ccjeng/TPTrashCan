@@ -65,9 +65,6 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
 
         mPresenter.onCreate();
 
-        //mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
-
-
         if (Version.isNewInstallation(this)) {
             this.showDialog(DIALOG_WELCOME);
         }
