@@ -1,6 +1,6 @@
 package com.ccjeng.tptrashcan.view.base;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.ccjeng.tptrashcan.BuildConfig;
 import com.ccjeng.tptrashcan.R;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 /**
  * Created by andycheng on 2015/9/2.
  */
-public class TPTrashCan extends Application {
+public class TPTrashCan extends MultiDexApplication {
     // Debugging switch 
     public static final boolean APPDEBUG = BuildConfig.DEBUG;
 
