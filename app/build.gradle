@@ -8,8 +8,8 @@ android {
         applicationId "com.ccjeng.tptrashcan"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 30
-        versionName '2.1.0.102716TC'
+        versionCode 31
+        versionName '2.1.1.120216TC'
         multiDexEnabled true
     }
     buildTypes {
@@ -33,24 +33,24 @@ android {
 
 dependencies {
     //compile fileTree(include: 'Parse-*.jar', dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:design:25.0.0'
-    compile 'com.google.android.gms:play-services-maps:9.8.0'
-    compile 'com.google.android.gms:play-services-analytics:9.8.0'
-    compile 'com.google.android.gms:play-services-location:9.8.0'
-    compile 'com.google.firebase:firebase-core:9.8.0'
-    compile 'com.google.firebase:firebase-database:9.8.0'
-    compile 'com.google.firebase:firebase-ads:9.8.0'
-    releaseCompile 'com.google.firebase:firebase-crash:9.8.0'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
+    compile 'com.google.android.gms:play-services-analytics:10.0.1'
+    compile 'com.google.android.gms:play-services-location:10.0.1'
+    compile 'com.google.firebase:firebase-core:10.0.1'
+    compile 'com.google.firebase:firebase-database:10.0.1'
+    compile 'com.google.firebase:firebase-ads:10.0.1'
+    releaseCompile 'com.google.firebase:firebase-crash:10.0.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile('com.mikepenz:aboutlibraries:5.7.1@aar') {
         transitive = true
     }
-    compile 'com.facebook.android:audience-network-sdk:4.15.0'
+    compile 'com.facebook.android:audience-network-sdk:4.17.0'
     compile files('libs/FacebookAdapter.jar')
     compile files('libs/admob-adapter-1.0.0-1505261651-830485e.jar')
-    compile files('libs/vpadn-sdk-obf460-20906102-1609021438-69c7670.jar')
+    compile files('libs/vpadn-sdk-obf461-40016102-1610041216-cf5b7da.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'
