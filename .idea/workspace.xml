@@ -10,12 +10,7 @@
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b84ce38d-b91f-42a6-b566-b9648f1beee4" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/libs/vpadn-sdk-obf460-20906102-1609021438-69c7670.jar" afterPath="$PROJECT_DIR$/app/libs/vpadn-sdk-obf461-40016102-1610041216-cf5b7da.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-    </list>
+    <list default="true" id="b84ce38d-b91f-42a6-b566-b9648f1beee4" name="Default" comment="" />
     <ignored path="TPTrashCan.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
