@@ -12,8 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!-- Vpon -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
+    <!--<uses-permission android:name="android.permission.GET_ACCOUNTS" />-->
     <application
         android:name=".view.base.TPTrashCan"
         android:allowBackup="true"

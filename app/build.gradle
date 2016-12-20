@@ -8,8 +8,8 @@ android {
         applicationId "com.ccjeng.tptrashcan"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 31
-        versionName '2.1.1.120216TC'
+        versionCode 32
+        versionName '2.1.2.122016TC'
         multiDexEnabled true
     }
     buildTypes {
@@ -33,8 +33,8 @@ android {
 
 dependencies {
     //compile fileTree(include: 'Parse-*.jar', dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
     compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'com.google.android.gms:play-services-analytics:10.0.1'
     compile 'com.google.android.gms:play-services-location:10.0.1'
