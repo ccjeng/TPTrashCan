@@ -111,7 +111,6 @@
     <orderEntry type="library" exported="" name="support-core-ui-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-analytics-impl-11.0.4" level="project" />
     <orderEntry type="library" exported="" name="play-services-ads-11.0.4" level="project" />
-    <orderEntry type="library" exported="" name="FacebookAdapter" level="project" />
     <orderEntry type="library" exported="" name="play-services-safetynet-11.0.4" level="project" />
     <orderEntry type="library" exported="" name="play-services-basement-11.0.4" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-24.0.0" level="project" />
@@ -123,6 +122,7 @@
     <orderEntry type="library" exported="" name="play-services-location-11.0.4" level="project" />
     <orderEntry type="library" exported="" name="play-services-maps-11.0.4" level="project" />
     <orderEntry type="library" exported="" name="firebase-database-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="facebook-4.25.0.0" level="project" />
     <orderEntry type="library" exported="" name="fastadapter-1.6.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-database-connection-11.0.4" level="project" />
     <orderEntry type="library" exported="" name="play-services-clearcut-11.0.4" level="project" />
