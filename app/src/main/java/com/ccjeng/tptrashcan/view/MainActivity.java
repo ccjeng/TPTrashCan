@@ -29,20 +29,20 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity<MainView, MainPresenter> implements MainView {
 
     private static final String TAG = "MainActivity";
 
-    @Bind(R.id.navigation)
+    @BindView(R.id.navigation)
     NavigationView navigation;
 
-    @Bind(R.id.drawerlayout)
+    @BindView(R.id.drawerlayout)
     DrawerLayout drawerLayout;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
