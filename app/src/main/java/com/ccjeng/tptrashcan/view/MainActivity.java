@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
         mPresenter.onCreate();
 
         if (Version.isNewInstallation(this)) {
-            this.showDialog(DIALOG_WELCOME);
+           // this.showDialog(DIALOG_WELCOME);
         }
         else
         if (Version.newVersionInstalled(this)) {
